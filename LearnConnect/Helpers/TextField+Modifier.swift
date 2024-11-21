@@ -20,5 +20,6 @@ struct AppTextFieldModifier: ViewModifier {
                     .stroke(lineWidth: 2)
                     .foregroundStyle(Color.appGreenColor)
             }
+            .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.15)))
     }
 }

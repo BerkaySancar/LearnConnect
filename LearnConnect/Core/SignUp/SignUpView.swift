@@ -13,20 +13,37 @@ struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
     
     var body: some View {
-        InputView()
+        VStack(spacing: 20) {
+            TopView()
+                .padding(.top, 20)
+            InputView()
+            Spacer()
+        }
     }
 }
 
+//MARK: - UI Elements Extension
 extension SignUpView {
+    
+    @ViewBuilder
+    private func TopView() -> some View {
+        VStack {
+            Image(systemName: "graduationcap.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundStyle(.appGreen)
+                .padding(.bottom, 16)
+            Text("Register for")
+                .font(.title)
+                .foregroundStyle(.appGreen)
+            Text("LearnConnect")
+                .font(.title.italic())
+        }
+    }
     
     @ViewBuilder
     private func InputView() -> some View {
         VStack {
-            Text("Register")
-                .font(.title2).bold()
-                .foregroundStyle(.gray)
-                .padding(.top, 10)
-            
             Group {
                 TextField("", text: $viewModel.firstName, prompt: Text("First Name"))
                 TextField("", text: $viewModel.lastName, prompt: Text("Last Name"))
@@ -35,15 +52,18 @@ extension SignUpView {
             }
             .frame(height: 30)
             .modifier(AppTextFieldModifier())
+            .padding(.top, 4)
             
             CustomButton(
                 imageName: nil,
-                buttonText: "Create",
+                buttonText: "Sign Up",
                 action: something,
                 imageTint: nil,
                 width: 100
             )
             .padding(.top)
+            
+            Spacer()
         
             Button {
                 coordinator.pop()

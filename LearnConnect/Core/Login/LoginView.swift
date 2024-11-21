@@ -13,9 +13,11 @@ struct LoginView: View {
     @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
-        VStack(spacing: 75) {
+        VStack(spacing: 20) {
             TopView()
+                .padding(.top, 20)
             InputView()
+            Spacer()
         }
     }
 }
@@ -66,6 +68,8 @@ extension LoginView {
                 width: 100
             )
             .padding(.top)
+  
+            Spacer()
             
             Button {
                 coordinator.push(.signup)
