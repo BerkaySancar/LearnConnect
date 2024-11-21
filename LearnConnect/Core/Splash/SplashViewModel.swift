@@ -11,6 +11,7 @@ import SystemConfiguration
 enum SplashRoute {
     case login
     case mainTabBar
+    case onboarding
 }
 
 final class SplashViewModel: ObservableObject {
@@ -21,7 +22,7 @@ final class SplashViewModel: ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self else { return }
             if self.networkReachability() {
-                completion(.login)
+                completion(.onboarding)
             } else {
                 self.presentNetworkAlert.toggle()
             }

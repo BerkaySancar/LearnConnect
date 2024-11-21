@@ -16,7 +16,7 @@ struct SplashView: View {
         VStack {
             Image(systemName: "graduationcap.fill")
                 .resizable()
-                .frame(width: 80, height: 80)
+                .frame(width: 100, height: 100)
                 .foregroundStyle(.appGreen)
                 .padding(.bottom, 16)
             Text("LearnConnect")
@@ -25,6 +25,8 @@ struct SplashView: View {
         .onAppear {
             viewModel.splashAction { route in
                 switch route {
+                case .onboarding:
+                    self.coordinator.push(.onboarding)
                 case .login:
                     self.coordinator.push(.login)
                 case .mainTabBar:

@@ -16,15 +16,18 @@ struct CustomButton: View {
     let width: CGFloat
     
     var body: some View {
-        HStack(spacing: 4) {
-            if let imageName,
-               let imageTint{
-                Image(systemName: imageName)
-                    .foregroundStyle(imageTint)
+        Button(action: action) {
+            HStack(spacing: 4) {
+                if let imageName, let imageTint {
+                    Image(systemName: imageName)
+                        .foregroundStyle(imageTint)
+                }
+                Text(buttonText)
+                    .fontWeight(.semibold)
             }
-            Button(buttonText, action: action)
+            .frame(maxWidth: .infinity)
         }
-        .frame(minWidth: width)
+        .frame(width: width)
         .foregroundStyle(.white)
         .padding(.vertical, 16)
         .padding(.horizontal, 8)

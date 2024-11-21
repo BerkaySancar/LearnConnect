@@ -19,6 +19,10 @@ struct LearnConnectApp: App {
                     .environmentObject(self.coordinator)
                     .navigationDestination(for: Route.self) { route in
                         switch route {
+                        case .onboarding:
+                            OnboardingView()
+                                .navigationBarBackButtonHidden()
+                                .environmentObject(self.coordinator)
                         case .login:
                             LoginView()
                                 .navigationBarBackButtonHidden()
