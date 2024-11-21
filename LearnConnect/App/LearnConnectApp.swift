@@ -28,7 +28,9 @@ struct LearnConnectApp: App {
                                 .navigationBarBackButtonHidden()
                                 .environmentObject(self.coordinator)
                         case .mainTabBar:
-                            EmptyView()
+                            MainTabbarView()
+                                .navigationBarBackButtonHidden()
+                                .environmentObject(self.coordinator)
                         }
                     }
             }

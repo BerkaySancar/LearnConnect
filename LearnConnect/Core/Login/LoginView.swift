@@ -60,7 +60,7 @@ extension LoginView {
                 imageName: nil,
                 buttonText: "Login",
                 action: {
-                    
+                    coordinator.push(.mainTabBar)
                 },
                 imageTint: nil,
                 width: 100
