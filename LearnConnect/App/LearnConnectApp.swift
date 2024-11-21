@@ -20,9 +20,13 @@ struct LearnConnectApp: App {
                     .navigationDestination(for: Route.self) { route in
                         switch route {
                         case .login:
-                            EmptyView()
+                            LoginView()
+                                .navigationBarBackButtonHidden()
+                                .environmentObject(self.coordinator)
                         case .signup:
-                            EmptyView()
+                            SignUpView()
+                                .navigationBarBackButtonHidden()
+                                .environmentObject(self.coordinator)
                         case .mainTabBar:
                             EmptyView()
                         }

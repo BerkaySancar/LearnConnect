@@ -14,6 +14,11 @@ struct SplashView: View {
     
     var body: some View {
         VStack {
+            Image(systemName: "graduationcap.fill")
+                .resizable()
+                .frame(width: 80, height: 80)
+                .foregroundStyle(.appGreen)
+                .padding(.bottom, 16)
             Text("LearnConnect")
                 .font(.title.italic())
         }
