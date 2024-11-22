@@ -19,6 +19,15 @@ struct LoginView: View {
             InputView()
             Spacer()
         }
+        .alert(isPresented: $viewModel.showAlert) {
+            switch viewModel.activeAlert {
+            case .loginFailed:
+                Alert(
+                    title: Text(LoginAlert.loginFailed.title),
+                    message: Text(LoginAlert.loginFailed.message)
+                )
+            }
+        }
     }
 }
 
@@ -47,7 +56,7 @@ extension LoginView {
             Group {
                 TextField("",
                           text: $viewModel.email,
-                          prompt: Text("Username"))
+                          prompt: Text("Email"))
                 
                 SecureField("",
                             text: $viewModel.password,
@@ -62,7 +71,9 @@ extension LoginView {
                 imageName: nil,
                 buttonText: "Login",
                 action: {
-                    coordinator.push(.mainTabBar)
+                    viewModel.loginTapped {
+                        coordinator.push(.mainTabBar)
+                    }
                 },
                 imageTint: nil,
                 width: 100

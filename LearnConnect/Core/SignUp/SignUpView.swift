@@ -19,6 +19,21 @@ struct SignUpView: View {
             InputView()
             Spacer()
         }
+        .alert(isPresented: $viewModel.showAlert) {
+            switch viewModel.activeAlert {
+            case .signUpSuccess:
+                Alert(
+                    title: Text(SignUpAlert.signUpSuccess.title),
+                    message: Text(SignUpAlert.signUpSuccess.message),
+                    dismissButton: .cancel(Text("OK"), action: {
+                        coordinator.pop()
+                    })
+                )
+            case .signUpFailure:
+                Alert(title: Text(SignUpAlert.signUpFailure.title),
+                      message: Text(SignUpAlert.signUpFailure.message))
+            }
+        }
     }
 }
 
@@ -48,7 +63,7 @@ extension SignUpView {
                 TextField("", text: $viewModel.firstName, prompt: Text("First Name"))
                 TextField("", text: $viewModel.lastName, prompt: Text("Last Name"))
                 TextField("", text: $viewModel.email, prompt: Text("Email"))
-                SecureField("", text: $viewModel.password, prompt: Text("Password"))
+                SecureField("", text: $viewModel.password , prompt: Text("Password"))
             }
             .frame(height: 30)
             .modifier(AppTextFieldModifier())
@@ -57,7 +72,7 @@ extension SignUpView {
             CustomButton(
                 imageName: nil,
                 buttonText: "Sign Up",
-                action: something,
+                action: viewModel.signUpTapped,
                 imageTint: nil,
                 width: 100
             )
@@ -84,8 +99,6 @@ extension SignUpView {
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }
-    
-    func something() { }
 }
 
 #Preview {

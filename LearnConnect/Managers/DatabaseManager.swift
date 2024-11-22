@@ -1,12 +1,12 @@
 //
-//  CoreDataManager.swift
+//  DatabaseManager.swift
 //  LearnConnect
 //
 //  Created by Berkay Sancar on 22.11.2024.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 final class DatabaseManager {
     
@@ -50,12 +50,24 @@ final class DatabaseManager {
         user.name = name
         user.surname = surname
         user.email = email
+        user.password = password
         save()
     }
-        
+    
+    func deleteAllUsers() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print("Failed to delete all users: \(error)")
+        }
+    }
+    
     func deleteUser(user: User) {
         context.delete(user)
         save()
     }
 }
-
