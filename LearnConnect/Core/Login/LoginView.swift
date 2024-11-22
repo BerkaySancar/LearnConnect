@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct LoginView: View {
-    
+
     @EnvironmentObject private var coordinator: Coordinator
+    @AppStorage("loggedInUserID") private var loggedInUserID = ""
+    
     @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
@@ -71,7 +73,8 @@ extension LoginView {
                 imageName: nil,
                 buttonText: "Login",
                 action: {
-                    viewModel.loginTapped {
+                    viewModel.loginTapped { id in
+                        self.loggedInUserID = id
                         coordinator.push(.mainTabBar)
                     }
                 },

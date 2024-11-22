@@ -8,23 +8,23 @@
 import Foundation
 import SystemConfiguration
 
-enum SplashRoute {
-    case login
-    case mainTabBar
-    case onboarding
-}
 
 final class SplashViewModel: ObservableObject {
     
     @Published var presentNetworkAlert = false
     
-    func splashAction(completion: @escaping ((SplashRoute) -> Void)) {
+    @Published var isAuthorized: Bool = false
+    @Published var splashRoute: SplashRoute? = nil
+    
+    func splashAction() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self else { return }
-            if self.networkReachability() {
-                completion(.onboarding)
+            if self.networkReachability() == false {
+                presentNetworkAlert.toggle()
+            } else if isAuthorized {
+                self.splashRoute = .mainTabBar
             } else {
-                self.presentNetworkAlert.toggle()
+                self.splashRoute = .onboarding
             }
         }
     }
@@ -38,4 +38,9 @@ final class SplashViewModel: ObservableObject {
         }
         return false
     }
+}
+
+enum SplashRoute {
+    case onboarding
+    case mainTabBar
 }

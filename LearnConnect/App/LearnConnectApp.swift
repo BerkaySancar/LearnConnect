@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct LearnConnectApp: App {
     
+    @AppStorage("isDarkMode") private var darkMode = false
     @StateObject private var coordinator: Coordinator = Coordinator()
     
     var body: some Scene {
@@ -38,6 +39,7 @@ struct LearnConnectApp: App {
                         }
                     }
             }
+            .preferredColorScheme(darkMode ? .dark : .light)
         }
     }
 }

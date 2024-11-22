@@ -15,12 +15,12 @@ final class LoginViewModel: ObservableObject {
     @Published var activeAlert: LoginAlert = .loginFailed
     @Published var showAlert = false
     
-    func loginTapped(completion: () -> Void) {
+    func loginTapped(completion: (String) -> Void) {
         let user: User? = DatabaseManager.shared.getUsers().first { $0.email == email && $0.password == password }
         
-        if let user {
-            print(user)
-            completion()
+        if let user = user,
+           let id = user.id {
+            completion(id)
         } else {
             activeAlert = .loginFailed
             showAlert.toggle()

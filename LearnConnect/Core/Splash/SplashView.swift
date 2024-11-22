@@ -10,8 +10,10 @@ import SwiftUI
 struct SplashView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
-    @StateObject private var viewModel = SplashViewModel()
+    @AppStorage("loggedInUserID") private var loggedInUserID = ""
     
+    @StateObject private var viewModel = SplashViewModel()
+
     var body: some View {
         VStack {
             Image(systemName: "graduationcap.fill")
@@ -23,22 +25,26 @@ struct SplashView: View {
                 .font(.title.italic())
         }
         .onAppear {
-            viewModel.splashAction { route in
-                switch route {
-                case .onboarding:
-                    self.coordinator.push(.onboarding)
-                case .login:
-                    self.coordinator.push(.login)
-                case .mainTabBar:
-                    self.coordinator.push(.mainTabBar)
-                }
+            self.viewModel.isAuthorized = self.loggedInUserID != ""
+            viewModel.splashAction()
+        }
+        .onChange(of: viewModel.splashRoute) { route in
+            guard let route else { return }
+            switch route {
+            case .onboarding:
+                coordinator.push(.onboarding)
+            case .mainTabBar:
+                coordinator.push(.mainTabBar)
             }
         }
         .alert(isPresented: $viewModel.presentNetworkAlert) {
             Alert(
-                title: Text("No internet connection."),
-                message: Text("Please check your connection to see updated content."),
-                dismissButton: .cancel(Text("Done"), action: { } ))
+                title: Text("No Internet Connection"),
+                message: Text("Please connect to the internet to see updated content."),
+                dismissButton: .cancel(Text("OK"), action: {
+                    viewModel.splashAction()
+                })
+            )
         }
     }
 }

@@ -66,8 +66,10 @@ final class DatabaseManager {
         }
     }
     
-    func deleteUser(user: User) {
-        context.delete(user)
-        save()
+    func deleteUser(userId: String) {
+        if let user = getUsers().first(where: { $0.id == userId }) {
+            context.delete(user)
+            save()
+        }
     }
 }

@@ -9,4 +9,7 @@ import Foundation
 
 final class SettingsViewModel: ObservableObject {
     
+    func deleteAccountBy(id: String) {
+        DatabaseManager.shared.deleteUser(userId: id)
+    }
 }
