@@ -76,6 +76,7 @@ struct SettingsView: View {
             Spacer()
         }
         .padding()
+        .background(.appBackground)
     }
 }
 

@@ -15,36 +15,43 @@ struct SplashView: View {
     @StateObject private var viewModel = SplashViewModel()
 
     var body: some View {
-        VStack {
-            Image(systemName: "graduationcap.fill")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .foregroundStyle(.appGreen)
-                .padding(.bottom, 16)
-            Text("LearnConnect")
-                .font(.title.italic())
-        }
-        .onAppear {
-            self.viewModel.isAuthorized = self.loggedInUserID != ""
-            viewModel.splashAction()
-        }
-        .onChange(of: viewModel.splashRoute) { route in
-            guard let route else { return }
-            switch route {
-            case .onboarding:
-                coordinator.push(.onboarding)
-            case .mainTabBar:
-                coordinator.push(.mainTabBar)
+        ZStack {
+            LinearGradient(colors: [.appGreen, .linearGreen], startPoint: .top, endPoint: .bottom)
+                .ignoresSafeArea()
+            
+            VStack {
+                Image(systemName: "graduationcap.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .foregroundStyle(.white)
+                    .padding(.bottom, 16)
+                Text("LearnConnect")
+                    .font(.title.italic())
+                    .foregroundStyle(.white)
+                    .bold()
             }
-        }
-        .alert(isPresented: $viewModel.presentNetworkAlert) {
-            Alert(
-                title: Text("No Internet Connection"),
-                message: Text("Please connect to the internet to see updated content."),
-                dismissButton: .cancel(Text("OK"), action: {
-                    viewModel.splashAction()
-                })
-            )
+            .onAppear {
+                self.viewModel.isAuthorized = self.loggedInUserID != ""
+                viewModel.splashAction()
+            }
+            .onChange(of: viewModel.splashRoute) { route in
+                guard let route else { return }
+                switch route {
+                case .onboarding:
+                    coordinator.push(.onboarding)
+                case .mainTabBar:
+                    coordinator.push(.mainTabBar)
+                }
+            }
+            .alert(isPresented: $viewModel.presentNetworkAlert) {
+                Alert(
+                    title: Text("No Internet Connection"),
+                    message: Text("Please connect to the internet to see updated content."),
+                    dismissButton: .cancel(Text("OK"), action: {
+                        viewModel.splashAction()
+                    })
+                )
+            }
         }
     }
 }

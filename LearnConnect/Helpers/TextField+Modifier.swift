@@ -18,7 +18,7 @@ struct AppTextFieldModifier: ViewModifier {
             .overlay {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(lineWidth: 2)
-                    .foregroundStyle(Color.appGreenColor)
+                    .foregroundStyle(.appGreen)
             }
             .background(RoundedRectangle(cornerRadius: 10).fill(.gray.opacity(0.15)))
     }

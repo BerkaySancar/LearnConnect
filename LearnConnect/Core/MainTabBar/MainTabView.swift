@@ -49,6 +49,28 @@ struct MainTabbarView: View {
         UITabBar.appearance().isHidden = true
     }
     
+//    var body: some View {
+//         TabView {
+//             HomeView()
+//                 .tabItem {
+//                     Label("Home", systemImage: "house")
+//                 }
+//             FavoritesView()
+//                 .tabItem {
+//                     Label("Favorites", systemImage: "star")
+//                 }
+//             ProfileView()
+//                 .tabItem {
+//                     Label("Profile", systemImage: "person")
+//                 }
+//             SettingsView()
+//                 .tabItem {
+//                     Label("Settings", systemImage: "gear")
+//                 }
+//         }
+//         .tint(.appGreen)
+//     }
+    
     var body: some View {
         ZStack(alignment: .bottom){
             TabView(selection: $selectedTab) {

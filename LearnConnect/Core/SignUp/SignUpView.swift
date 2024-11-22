@@ -34,6 +34,7 @@ struct SignUpView: View {
                       message: Text(SignUpAlert.signUpFailure.message))
             }
         }
+        .background(.appBackground)
     }
 }
 
@@ -95,7 +96,7 @@ extension SignUpView {
             .padding(.bottom, 10)
         }
         .padding(.horizontal)
-        .background(.background)
+        .background(.appBackground)
         .clipShape(RoundedRectangle(cornerRadius: 16))
         .padding(.horizontal)
     }

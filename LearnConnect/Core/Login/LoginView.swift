@@ -11,6 +11,7 @@ struct LoginView: View {
 
     @EnvironmentObject private var coordinator: Coordinator
     @AppStorage("loggedInUserID") private var loggedInUserID = ""
+    @AppStorage("loggedUserName") private var userName = ""
     
     @StateObject private var viewModel = LoginViewModel()
     
@@ -30,6 +31,7 @@ struct LoginView: View {
                 )
             }
         }
+        .background(.appBackground)
     }
 }
 
