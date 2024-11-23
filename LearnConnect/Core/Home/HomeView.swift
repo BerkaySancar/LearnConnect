@@ -14,6 +14,7 @@ struct HomeView: View {
     @AppStorage("isDarkMode") private var darkMode = false
     
     @State private var text = ""
+    @Binding var selectedTab: Int
     
     var courses: [Course] = [
           Course(title: "SwiftUI Essentials", imageName: "swift"),
@@ -61,9 +62,11 @@ extension HomeView {
                         .foregroundStyle(.appWhiteText)
                         .padding(.top, 8)
                        
-                SearchView()
+                CustomSearchBarView(text: $text, searchDisabled: true)
                     .padding(.top, 16)
-                
+                    .onTapGesture {
+                        selectedTab = 1
+                    }
                 }
                 .foregroundStyle(.white)
                 .font(.title2)
@@ -71,20 +74,6 @@ extension HomeView {
         .frame(height: 154)
     }
     
-    @ViewBuilder
-    private func SearchView() -> some View {
-        ZStack {
-            TextField("", text: $text, prompt: Text(" 🔍 Search Course").foregroundColor(.gray)
-                .font(.system(size: 16)))
-                .textFieldStyle(.plain)
-                .padding(.all, 10)
-                .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.white))
-                .autocorrectionDisabled(true)
-                .padding(.leading, 16)
-                .padding(.trailing, 16)
-        }
-    }
-  
     @ViewBuilder
     private func ContentView(geometry: GeometryProxy) -> some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -96,9 +85,9 @@ extension HomeView {
                 LazyHGrid(rows: [GridItem(.fixed(500))], spacing: 0) {
                     ForEach(courses) { course in
                         VStack {
-                            CourseCard(geometry: geometry, course: course)
-                                .frame(width: geometry.size.width / 1.35, height: 260)
-                                .padding(.horizontal)
+                            CourseCardView(course: course)
+                                .padding(.leading, 16)
+                                .frame(width: geometry.size.width / 1.34, height: 220)
                         }
                     }
                 }
@@ -155,80 +144,6 @@ extension HomeView {
         }
     }
     
-    @ViewBuilder
-    private func CourseCard(geometry: GeometryProxy, course: Course) -> some View {
-            VStack(alignment: .leading, spacing: 0) {
-                ZStack {
-                    AsyncImage(url: .init(string: "https://images.theconversation.com/files/374729/original/file-20201214-19-dtt9f5.jpg")!) { image in
-                        image
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: geometry.size.width / 1.35, height: 170)
-                            .clipped()
-                            .overlay(
-                                Color.black.opacity(0.5)
-                            )
-                            .clipShape(RoundedRectangle(cornerRadius: 16))
-                    } placeholder: {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 16)
-                                .foregroundStyle(.gray)
-                                .frame(width: geometry.size.width / 1.35, height: 170)
-                        }
-                    }
-                    
-                    Image(systemName: "play.fill")
-                        .font(.system(size: 40))
-                        .foregroundStyle(.white)
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button {
-                       
-                        } label: {
-                            Image(systemName: "heart")
-                                .font(.system(size: 24))
-                                .padding()
-                                .frame(width: 40, height: 40)
-                                .foregroundStyle(.appGreen)
-                                .background(Capsule().foregroundStyle(.appWhiteText))
-                        }
-                    }
-                    .frame(width: geometry.size.width / 1.4)
-                    .offset(y: -55)
-                    
-                    HStack {
-                        Spacer()
-                        Button {
-                         
-                        } label: {
-                            Text("Android")
-                                .font(.system(size: 16))
-                                .padding()
-                                .frame(height: 40)
-                                .foregroundStyle(.appGreen)
-                                .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.appWhiteText))
-                        }
-                    }
-                    .frame(width: geometry.size.width / 1.4)
-                    .offset(y: 55)
-                }
-
-                Group {
-                    Text(course.title)
-                        .font(.subheadline)
-                        .bold()
-                    
-                    Text(course.title)
-                        .font(.subheadline)
-                        .bold()
-                }
-                .padding(.top, 16)
-                .foregroundStyle(darkMode ? .white : .black)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
 }
 
 
@@ -239,5 +154,5 @@ struct Course: Identifiable {
 }
 
 #Preview {
-    HomeView()
+    HomeView(selectedTab: .constant(1))
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 enum TabbedItems: Int, CaseIterable {
     case home = 0
+    case search
     case favorites
     case profile
     case settings
@@ -17,6 +18,8 @@ enum TabbedItems: Int, CaseIterable {
         switch self {
         case .home:
             return "Home"
+        case .search:
+            return "Search"
         case .favorites:
             return "Favorite"
         case .profile:
@@ -30,6 +33,8 @@ enum TabbedItems: Int, CaseIterable {
         switch self {
         case .home:
             return "house"
+        case .search:
+            return "magnifyingglass"
         case .favorites:
             return "heart"
         case .profile:
@@ -48,43 +53,24 @@ struct MainTabbarView: View {
     init() {
         UITabBar.appearance().isHidden = true
     }
-    
-//    var body: some View {
-//         TabView {
-//             HomeView()
-//                 .tabItem {
-//                     Label("Home", systemImage: "house")
-//                 }
-//             FavoritesView()
-//                 .tabItem {
-//                     Label("Favorites", systemImage: "star")
-//                 }
-//             ProfileView()
-//                 .tabItem {
-//                     Label("Profile", systemImage: "person")
-//                 }
-//             SettingsView()
-//                 .tabItem {
-//                     Label("Settings", systemImage: "gear")
-//                 }
-//         }
-//         .tint(.appGreen)
-//     }
-    
+        
     var body: some View {
         ZStack(alignment: .bottom){
             TabView(selection: $selectedTab) {
-                HomeView()
+                HomeView(selectedTab: $selectedTab)
                     .tag(0)
                 
-                FavoritesView()
+                SearchView()
                     .tag(1)
+                
+                FavoritesView()
+                    .tag(2)
 
                 ProfileView()
-                    .tag(2)
+                    .tag(3)
                 
                 SettingsView()
-                    .tag(3)
+                    .tag(4)
             }
             
             ZStack {
@@ -117,14 +103,14 @@ extension MainTabbarView {
                 .renderingMode(.template)
                 .foregroundColor(isActive ? .white : .white)
                 .frame(width: 20, height: 20)
-            if isActive{
-                Text(title)
-                    .font(.system(size: 14))
-                    .foregroundColor(isActive ? .white : .white)
-            }
+//            if isActive{
+//                Text(title)
+//                    .font(.system(size: 14))
+//                    .foregroundColor(isActive ? .white : .white)
+//            }
             Spacer()
         }
-        .frame(width: isActive ? 120 : 60, height: 60)
+        .frame(width: isActive ? 60 : 60, height: 60)
         .background(isActive ? .appGreen : .clear)
         .cornerRadius(30)
     }
