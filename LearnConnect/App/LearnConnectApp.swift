@@ -13,6 +13,10 @@ struct LearnConnectApp: App {
     @AppStorage("isDarkMode") private var darkMode = false
     @StateObject private var coordinator: Coordinator = Coordinator()
     
+    init() {
+        navBarAppearance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $coordinator.path) {
@@ -36,10 +40,20 @@ struct LearnConnectApp: App {
                             MainTabbarView()
                                 .navigationBarBackButtonHidden()
                                 .environmentObject(self.coordinator)
+                        case .courseDetail:
+                            CourseDetailView()
+                                .environmentObject(self.coordinator)
                         }
                     }
             }
             .preferredColorScheme(darkMode ? .dark : .light)
         }
+    }
+    
+    private func navBarAppearance() {
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.appGreen]
+        UIBarButtonItem.appearance().tintColor = UIColor.black
+        UINavigationBar.appearance().standardAppearance = appearance
     }
 }

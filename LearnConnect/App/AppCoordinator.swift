@@ -12,6 +12,7 @@ enum Route: Hashable {
     case login
     case signup
     case mainTabBar
+    case courseDetail
 }
 
 final class Coordinator: ObservableObject {
