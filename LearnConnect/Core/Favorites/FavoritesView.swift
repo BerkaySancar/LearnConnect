@@ -12,7 +12,11 @@ struct FavoritesView: View {
     @StateObject private var viewModel = FavoritesViewModel()
     
     var body: some View {
-        Text("Favorites")
+        VStack {
+            DefaultTopView(title: "Favorites")
+            
+            Spacer()
+        }
     }
 }
 

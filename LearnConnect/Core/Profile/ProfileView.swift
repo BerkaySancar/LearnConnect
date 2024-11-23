@@ -12,7 +12,11 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
-        Text("Profile")
+        VStack {
+            DefaultTopView(title: "Profile")
+            
+            Spacer()
+        }
     }
 }
 

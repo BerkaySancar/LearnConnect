@@ -20,7 +20,7 @@ struct SettingsView: View {
     
     var body: some View {
         VStack {
-            TopView()
+            DefaultTopView(title: "Settings")
 
             Group {
                 HStack {

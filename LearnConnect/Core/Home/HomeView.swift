@@ -10,7 +10,7 @@ import SwiftUI
 struct HomeView: View {
     
     @StateObject private var viewModel = HomeViewModel()
-    
+    @EnvironmentObject private var coordinator: Coordinator
     @AppStorage("isDarkMode") private var darkMode = false
     
     @State private var text = ""
@@ -88,6 +88,9 @@ extension HomeView {
                             CourseCardView(course: course)
                                 .padding(.leading, 16)
                                 .frame(width: geometry.size.width / 1.34, height: 220)
+                                .onTapGesture {
+                                    coordinator.push(.courseDetail)
+                                }
                         }
                     }
                 }

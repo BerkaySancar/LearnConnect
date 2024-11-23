@@ -101,7 +101,7 @@ extension MainTabbarView {
             Image(systemName: imageName)
                 .resizable()
                 .renderingMode(.template)
-                .foregroundColor(.appBackground)
+                .foregroundColor(.white)
                 .frame(width: 20, height: 20)
 //            if isActive{
 //                Text(title)

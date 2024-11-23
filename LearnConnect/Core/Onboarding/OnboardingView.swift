@@ -25,10 +25,10 @@ struct OnboardingView: View {
                 imageName: nil,
                 buttonText: viewModel.currentPage == viewModel.onboardingData.count - 1 ? "Start" : "Next",
                 action: { viewModel.nextTapped { self.coordinator.push(.login) }},
-                imageTint: nil,
-                width: 240
+                imageTint: nil
             )
             .padding(.bottom, 20)
+            .padding(.horizontal)
         }
     }
 }

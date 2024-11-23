@@ -13,7 +13,6 @@ struct CustomButton: View {
     let buttonText: String
     let action: () -> Void
     let imageTint: Color?
-    let width: CGFloat
     
     var body: some View {
         Button(action: action) {
@@ -27,11 +26,21 @@ struct CustomButton: View {
             }
             .frame(maxWidth: .infinity)
         }
-        .frame(width: width)
         .foregroundStyle(.white)
         .padding(.vertical, 16)
         .padding(.horizontal, 8)
         .background(RoundedRectangle(cornerRadius: 16)
             .foregroundStyle(.appGreen))
     }
+}
+
+#Preview {
+    CustomButton(
+        imageName: "heart",
+        buttonText: "Add favorite the course",
+        action: {
+            
+        },
+        imageTint: .appBackground
+    )
 }

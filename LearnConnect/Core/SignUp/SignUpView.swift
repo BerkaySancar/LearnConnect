@@ -74,8 +74,7 @@ extension SignUpView {
                 imageName: nil,
                 buttonText: "Sign Up",
                 action: viewModel.signUpTapped,
-                imageTint: nil,
-                width: 100
+                imageTint: nil
             )
             .padding(.top)
             

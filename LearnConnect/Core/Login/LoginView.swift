@@ -80,10 +80,10 @@ extension LoginView {
                         coordinator.push(.mainTabBar)
                     }
                 },
-                imageTint: nil,
-                width: 100
+                imageTint: nil
             )
             .padding(.top)
+            .padding(.horizontal)
   
             Spacer()
             
