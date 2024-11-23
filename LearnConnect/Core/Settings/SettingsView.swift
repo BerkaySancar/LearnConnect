@@ -19,65 +19,104 @@ struct SettingsView: View {
     @StateObject private var viewModel = SettingsViewModel()
     
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Settings")
-                .font(.title2.bold())
-                .foregroundStyle(.appGreen)
-                .padding(.bottom, 40)
+        VStack {
+            TopView()
 
-            HStack {
-                Image(systemName: "lightbulb.2")
-                    .foregroundColor(.primary)
-                Toggle("Dark Mode", isOn: $darkMode)
-                    .tint(.green)
-            }
-            
-            Divider()
-            
-            Button {
-                isPresentedSignOutConfirm.toggle()
-            } label: {
+            Group {
                 HStack {
-                    Image(systemName: "iphone.and.arrow.right.inward")
-                        .foregroundStyle(.red)
-                    
-                    Text("Sign Out")
-                        .foregroundStyle(.red)
+                    Image(systemName: "lightbulb.2")
+                        .foregroundColor(.primary)
+                    Toggle("Dark Mode", isOn: $darkMode)
+                        .tint(.green)
                 }
-            }
-            .confirmationDialog("Are you sure?", isPresented: $isPresentedSignOutConfirm) {
-                Button("Sign Out", role: .destructive) {
-                    self.loggedInUserID = ""
-                    self.coordinator.push(.login) }
-            }
-            
-            Divider()
-            
-            Button {
-                self.isPresentedDeleteAccountConfirm.toggle()
-            } label: {
-                HStack {
-                    Image(systemName: "xmark.shield")
-                        .foregroundStyle(.red)
-                    
-                    Text("Delete Account")
-                        .foregroundStyle(.red)
-                        .bold()
+                
+                Divider()
+                
+                Button {
+                    isPresentedSignOutConfirm.toggle()
+                } label: {
+                    HStack {
+                        Image(systemName: "iphone.and.arrow.right.inward")
+                            .foregroundStyle(.red)
+                        
+                        Text("Sign Out")
+                            .foregroundStyle(.red)
+                        
+                        Spacer()
+                    }
                 }
-            }
-            .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteAccountConfirm) {
-                Button("DELETE ACCOUNT", role: .destructive) {
-                    viewModel.deleteAccountBy(id: self.loggedInUserID)
-                    self.loggedInUserID = ""
-                    self.coordinator.push(.login)
+                .confirmationDialog("Are you sure?", isPresented: $isPresentedSignOutConfirm) {
+                    Button("Sign Out", role: .destructive) {
+                        self.loggedInUserID = ""
+                        self.coordinator.push(.login) }
                 }
+                
+                Divider()
+                
+                Button {
+                    self.isPresentedDeleteAccountConfirm.toggle()
+                } label: {
+                    HStack {
+                        Image(systemName: "xmark.shield")
+                            .foregroundStyle(.red)
+                        
+                        Text("Delete Account")
+                            .foregroundStyle(.red)
+                            .bold()
+                        
+                        Spacer()
+                    }
+                }
+                .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteAccountConfirm) {
+                    Button("DELETE ACCOUNT", role: .destructive) {
+                        viewModel.deleteAccountBy(id: self.loggedInUserID)
+                        self.loggedInUserID = ""
+                        self.coordinator.push(.login)
+                    }
+                }
+                
+                Spacer()
             }
+            .padding(.horizontal)
+            .padding(.top, 10)
             
-            Spacer()
+            VStack(alignment: .center) {
+                Text("Version 1.0.0")
+                Text("© Copyright Berkay Sancar © \n All rights reserved.")
+                    .multilineTextAlignment(.center)
+            }
+            .font(.caption)
+            .padding(.bottom, 100)
         }
-        .padding()
         .background(.appBackground)
     }
+}
+
+//MARK: - UI Elements Extension
+extension SettingsView {
+    
+    @ViewBuilder
+    private func TopView() -> some View {
+        ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 24)
+                .fill(LinearGradient(colors: [.appGreen, .linearGreen],
+                                     startPoint: .top,
+                                     endPoint: .bottom))
+                .ignoresSafeArea(edges: .top)
+                .frame(height: 60)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                Text("Settings")
+                    .foregroundStyle(.white)
+                    .font(.title2).bold()
+                    .padding(.leading, 16)
+                    .padding(.top, 12)
+                    .padding(.bottom, 8)
+            }
+        }
+        .frame(height: 50)
+    }
+    
 }
 
 #Preview {
