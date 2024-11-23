@@ -19,7 +19,7 @@ final class SplashViewModel: ObservableObject {
     func splashAction() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
             guard let self else { return }
-            if self.networkReachability() == false {
+            if Reachability.isNetworkReachable() == false {
                 presentNetworkAlert.toggle()
             } else if isAuthorized {
                 self.splashRoute = .mainTabBar
@@ -27,16 +27,6 @@ final class SplashViewModel: ObservableObject {
                 self.splashRoute = .onboarding
             }
         }
-    }
- 
-    private func networkReachability() -> Bool {
-        if let reachability = SCNetworkReachabilityCreateWithName(nil, "www.apple.com") {
-            var flags: SCNetworkReachabilityFlags = SCNetworkReachabilityFlags()
-            SCNetworkReachabilityGetFlags(reachability, &flags)
-            
-            return flags.contains(.reachable) && !flags.contains(.connectionRequired)
-        }
-        return false
     }
 }
 
