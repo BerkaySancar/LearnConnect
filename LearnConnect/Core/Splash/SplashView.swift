@@ -34,9 +34,9 @@ struct SplashView: View {
                 self.viewModel.isAuthorized = self.loggedInUserID != ""
                 viewModel.splashAction()
             }
-            .onChange(of: viewModel.splashRoute) { route in
-                guard let route else { return }
-                switch route {
+            .onChange(of: viewModel.splashRoute) { _, new in
+                guard let new else { return }
+                switch new {
                 case .onboarding:
                     coordinator.push(.onboarding)
                 case .mainTabBar:
