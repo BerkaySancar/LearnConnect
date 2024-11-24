@@ -18,41 +18,47 @@ final class FavoritesService {
         self.context = context
     }
     
-//    func addToFavorites(productId: String, name: String) {
-//        let favorite = Favorite(context: context)
-//        favorite.id = productId
-//        favorite.name = name
-//        save()
-//    }
-//
-//    func getFavorites() -> [Favorite] {
-//        do {
-//            let request = NSFetchRequest<Favorite>(entityName: "Favorite")
-//            return try context.fetch(request)
-//        } catch {
-//            print("Failed to fetch favorites: \(error.localizedDescription)")
-//            return []
-//        }
-//    }
-//
-//    func removeFromFavorites(productId: String) {
-//        do {
-//            let request = NSFetchRequest<Favorite>(entityName: "Favorite")
-//            request.predicate = NSPredicate(format: "id == %@", productId)
-//            if let favorite = try context.fetch(request).first {
-//                context.delete(favorite)
-//                save()
-//            }
-//        } catch {
-//            print("Failed to remove favorite: \(error.localizedDescription)")
-//        }
-//    }
-//
-//    private func save() {
-//        do {
-//            try context.save()
-//        } catch {
-//            print("Failed to save favorite: \(error.localizedDescription)")
-//        }
-//    }
+    func addToFavorites(course: Course) {
+        let favorite = Favorite(context: context)
+        favorite.id = course.id
+        favorite.name = course.name
+        favorite.instructor = course.instructor
+        favorite.thumbnail = course.thumbnail
+        favorite.category = course.category
+        favorite.video = course.video
+        favorite.desc = course.description
+        favorite.createdAt = course.createdAt
+        save()
+    }
+
+    func getFavorites() -> [Favorite] {
+        do {
+            let request = NSFetchRequest<Favorite>(entityName: "Favorite")
+            return try context.fetch(request)
+        } catch {
+            print("Failed to fetch favorites: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    func removeFromFavorites(id: String) {
+        if let favoriteCourse = getFavorites().first(where: { $0.id == id }) {
+            context.delete(favoriteCourse)
+            save()
+        }
+    }
+    
+    func isAlreadyFavorited(id: String) -> Bool {
+        getFavorites().contains(where: { $0.id == id })
+    }
+
+    private func save() {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                fatalError("CoreData save failed. \(error.localizedDescription)")
+            }
+        }
+    }
 }

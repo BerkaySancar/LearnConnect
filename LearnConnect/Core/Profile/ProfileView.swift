@@ -14,12 +14,9 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
     
     var courses: [Course] = [
-//                Course(title: "SwiftUI Essentials", imageName: "swift"),
-//                Course(title: "Mastering Combine", imageName: "combine"),
-//                Course(title: "iOS Animations", imageName: "animation"),
-//                Course(title: "CoreData Deep Dive", imageName: "coredata")
+        .example
     ]
-        
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading) {
@@ -36,42 +33,40 @@ struct ProfileView: View {
                                 .foregroundStyle(darkMode ? .white : .black)
                                 .padding(.leading, 16)
                             
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                LazyHStack {
-                                    ForEach(courses) { course in
-                                        HStack {
-                                            AsyncImage(url: .init(string: "https://images.theconversation.com/files/374729/original/file-20201214-19-dtt9f5.jpg")!) { image in
-                                                image
-                                                    .resizable()
-                                                    .scaledToFill()
-                                                    .frame(width: 140, height: 100)
-                                                    .overlay(
-                                                        Color.black.opacity(0.5)
-                                                    )
-                                                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                                            } placeholder: {
-                                                ZStack {
-                                                    RoundedRectangle(cornerRadius: 16)
-                                                        .foregroundStyle(.gray)
-                                                        .frame(width: 100, height: 100)
-                                                }
-                                            }
-                                            
-                                            VStack(alignment: .leading, spacing: 0) {
-                                                Text(course.name)
-                                                    .font(.headline)
-                                                    .padding(.bottom, 4)
-                                                Text("Ali Veli")
-                                                    .padding(.bottom, 16)
-                                                
-                                                ProgressView("%30 Complete", value: 30, total: 100)
-                                                    .tint(.appGreen)
+                            LazyVStack {
+                                ForEach(courses) { course in
+                                    HStack {
+                                        AsyncImage(url: .init(string: "https://images.theconversation.com/files/374729/original/file-20201214-19-dtt9f5.jpg")!) { image in
+                                            image
+                                                .resizable()
+                                                .scaledToFill()
+                                                .frame(width: 140, height: 100)
+                                                .overlay(
+                                                    Color.black.opacity(0.5)
+                                                )
+                                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                                        } placeholder: {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 16)
+                                                    .foregroundStyle(.gray)
+                                                    .frame(width: 100, height: 100)
                                             }
                                         }
-                                        .padding(.top, 16)
-                                        .padding(.trailing, 12)
-                                        .padding(.leading, 16)
+                                        
+                                        VStack(alignment: .leading, spacing: 0) {
+                                            Text(course.name)
+                                                .font(.headline)
+                                                .padding(.bottom, 4)
+                                            Text("Ali Veli")
+                                                .padding(.bottom, 16)
+                                            
+                                            ProgressView("%30 Complete", value: 30, total: 100)
+                                                .tint(.appGreen)
+                                        }
                                     }
+                                    .padding(.top, 16)
+                                    .padding(.trailing, 12)
+                                    .padding(.leading, 16)
                                 }
                             }
                         }

@@ -2,13 +2,13 @@
 //  CurrentUserModel.swift
 //  LearnConnect
 //
-//  Created by Berkay Sancar on 24.11.2024.
+//  Created by Berkay Sancar on 25.11.2024.
 //
 
 import Foundation
 
 struct CurrentUser {
-    let id: String
-    let name: String
-    let email: String
+    var id: String
+    var name: String
+    var email: String
 }

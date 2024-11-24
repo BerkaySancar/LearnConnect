@@ -78,9 +78,9 @@ extension SearchView {
         ScrollView {
             LazyVStack {
                 ForEach(courses) { course in
-                    CourseCardView(course: course)
-                        .frame(width: geometry.size.width - 32, height: 230)
-                        .padding(.top, 32)
+//                    CourseCardView(course: course, isFav: true)
+//                        .frame(width: geometry.size.width - 32, height: 230)
+//                        .padding(.top, 32)
                 }
             }
         }

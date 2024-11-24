@@ -18,25 +18,32 @@ struct CourseDetailView: View {
         self._viewModel = ObservedObject(wrappedValue: CourseDetailVM(course: course))
       }
         
-    var isJoined: Bool = true
+    var isJoined: Bool = false
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading, spacing: 0) {
-                ThumbnailView(geometry: geometry)
-                    .onTapGesture {
-                        if isJoined {
-                            coordinator.push(.videoPlayer(viewModel.course.video))
+            VStack {
+                VStack(alignment: .leading, spacing: 0) {
+                    ThumbnailView(geometry: geometry)
+                        .onTapGesture {
+                            if isJoined {
+                                coordinator.push(.videoPlayer(viewModel.course.video))
+                            }
                         }
+                    ScrollView(.vertical) {
+                        InformationsView()
+                        Spacer()
                     }
-                ScrollView(.vertical) {
-                    InformationsView()
+                    .frame(maxWidth: .infinity)
+                    BottomButtonsView()
+                    
                     Spacer()
+                    
                 }
-                .frame(maxWidth: .infinity)
-                BottomButtonsView()
+                .background(.appBackground)
+                
+                Spacer()
             }
-            .background(.appBackground)
         }
     }
 }
@@ -59,21 +66,38 @@ extension CourseDetailView {
                 .font(.system(size: 48))
                 .foregroundStyle(.white)
         }
-        .ignoresSafeArea(edges: .top)
-        .frame(width: geometry.size.width, height: geometry.size.height / 3)
+//        .ignoresSafeArea(edges: .top)
+        .padding(.horizontal, 16)
+        .frame(width: geometry.size.width, height: 220)
     }
     
     @ViewBuilder
     private func InformationsView() -> some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 12) {
             Text(viewModel.course.name)
-                .font(.title)
+                .font(.title2.bold())
             
-            Text(viewModel.course.instructor)
+            HStack {
+                Text(viewModel.course.instructor)
+                Spacer()
+                Text(viewModel.course.category)
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background {
+                        RoundedRectangle(cornerRadius: 16)
+                            .foregroundStyle(.orange.opacity(0.80))
+                    }
+            }
+            .padding(.bottom, 4)
             
             Text(viewModel.course.description)
-                .padding(.top, 16)
-                .font(.subheadline)
+                .padding()
+                .font(.callout)
+                .background {
+                    RoundedRectangle(cornerRadius: 16)
+                        .foregroundStyle(.softGreen)
+                }
         }
         .padding(.horizontal)
         .padding(.top, 16)

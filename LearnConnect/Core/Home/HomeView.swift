@@ -9,12 +9,13 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @StateObject private var viewModel = HomeViewModel()
-    @EnvironmentObject private var coordinator: Coordinator
     @AppStorage("isDarkMode") private var darkMode = false
+    @EnvironmentObject private var coordinator: Coordinator
     
+    @StateObject private var viewModel = HomeViewModel()
+ 
     @Binding var selectedTab: Int
-            
+    
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -24,6 +25,9 @@ struct HomeView: View {
                     CategorySliderView()
                 }
             }
+        }
+        .onAppear {
+            viewModel.getCourses()
         }
         .background(.appBackground)
     }
@@ -43,25 +47,25 @@ extension HomeView {
                 .frame(height: 170)
             
             VStack(alignment: .leading, spacing: 0) {
-                    Text("Hi Berkay,")
-                        .padding(.horizontal, 16)
-                        .bold()
-                        .font(.title)
-                    
-                    Text("Let's Start Learning")
-                        .padding(.horizontal, 16)
-                        .font(.title3)
-                        .foregroundStyle(.appWhiteText)
-                        .padding(.top, 8)
-                       
+                Text("Hi \(viewModel.currentUser?.name?.capitalized ?? ""),")
+                    .padding(.horizontal, 16)
+                    .bold()
+                    .font(.title)
+                
+                Text("Let's Start Learning")
+                    .padding(.horizontal, 16)
+                    .font(.title3)
+                    .foregroundStyle(.appWhiteText)
+                    .padding(.top, 8)
+                
                 CustomSearchBarView(text: $viewModel.searchText, searchDisabled: true)
                     .padding(.top, 16)
                     .onTapGesture {
                         selectedTab = 1
                     }
-                }
-                .foregroundStyle(.white)
-                .font(.title2)
+            }
+            .foregroundStyle(.white)
+            .font(.title2)
         }
         .frame(height: 154)
     }
@@ -70,25 +74,26 @@ extension HomeView {
     private func ContentView(geometry: GeometryProxy) -> some View {
         VStack(alignment: .leading, spacing: 0) {
             Text("Top Courses")
-                .font(.title3).bold()
+                .font(.title2).bold()
                 .padding(.horizontal, 16)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                LazyHGrid(rows: [GridItem(.fixed(500))], spacing: 0) {
+                LazyHStack {
                     ForEach(viewModel.courses) { course in
                         VStack {
-                            CourseCardView(course: course)
-                                .padding(.leading, 16)
-                                .frame(width: geometry.size.width / 1.34, height: 220)
-                                .onTapGesture {
-                                    coordinator.push(.courseDetail(course))
-                                }
+                            CourseCardView(course: course) { isFav in
+                                viewModel.favTapped(course: course, isFavorite: isFav)
+                            }
+                            .padding(.leading, 16)
+                            .frame(width: geometry.size.width / 1.34, height: 260)
+                            .onTapGesture {
+                                coordinator.push(.courseDetail(course))
+                            }
                         }
                     }
                 }
             }
-            .scrollIndicators(.never, axes: .horizontal)
-            .frame(height: 260)
+            .frame(height: 280)
         }
         .padding(.top, 16)
     }
@@ -97,23 +102,23 @@ extension HomeView {
     @ViewBuilder
     private func CategorySliderView() -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Category")
-                .font(.title3).bold()
+            Text("Categories")
+                .font(.title2).bold()
                 .padding(.horizontal, 16)
-             
+            
             ScrollView(.horizontal) {
                 LazyHGrid(rows: [GridItem(.flexible(minimum: 1))], spacing: 16) {
-                    ForEach(0...5, id: \.self) { category in
+                    ForEach(viewModel.categories, id: \.self) { category in
                         Button {
                             
                         } label : {
                             VStack {
-                                Image(systemName: "gear")
+                                Image(category.image)
                                     .resizable()
                                     .frame(width: 48, height: 48)
                                     .padding(.bottom, 16)
                                 
-                                Text("Design")
+                                Text(category.name)
                                     .fontWeight(.semibold)
                                     .foregroundStyle(darkMode ? .white : .black)
                             }

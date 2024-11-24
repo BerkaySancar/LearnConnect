@@ -22,71 +22,74 @@ struct SettingsView: View {
         VStack {
             DefaultTopView(title: "Settings")
 
-            Group {
-                HStack {
-                    Image(systemName: "lightbulb.2")
-                        .foregroundColor(.primary)
-                    Toggle("Dark Mode", isOn: $darkMode)
-                        .tint(.green)
-                }
-                
-                Divider()
-                
-                Button {
-                    isPresentedSignOutConfirm.toggle()
-                } label: {
+            VStack {
+                Group {
                     HStack {
-                        Image(systemName: "iphone.and.arrow.right.inward")
-                            .foregroundStyle(.red)
-                        
-                        Text("Sign Out")
-                            .foregroundStyle(.red)
-                        
-                        Spacer()
+                        Image(systemName: "lightbulb.2")
+                            .foregroundColor(.primary)
+                        Toggle("Dark Mode", isOn: $darkMode)
+                            .tint(.green)
                     }
-                }
-                .confirmationDialog("Are you sure?", isPresented: $isPresentedSignOutConfirm) {
-                    Button("Sign Out", role: .destructive) {
-                        viewModel.signOutTapped()
-                        self.coordinator.push(.login) }
-                }
-                
-                Divider()
-                
-                Button {
-                    self.isPresentedDeleteAccountConfirm.toggle()
-                } label: {
-                    HStack {
-                        Image(systemName: "xmark.shield")
-                            .foregroundStyle(.red)
-                        
-                        Text("Delete Account")
-                            .foregroundStyle(.red)
-                            .bold()
-                        
-                        Spacer()
+                    
+                    Divider()
+                    
+                    Button {
+                        isPresentedSignOutConfirm.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: "iphone.and.arrow.right.inward")
+                                .foregroundStyle(.red)
+                            
+                            Text("Sign Out")
+                                .foregroundStyle(.red)
+                            
+                            Spacer()
+                        }
                     }
-                }
-                .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteAccountConfirm) {
-                    Button("DELETE ACCOUNT", role: .destructive) {
-                        viewModel.deleteAccountBy(id: self.loggedInUserID)
-                        self.loggedInUserID = ""
-                        self.coordinator.push(.login)
+                    .confirmationDialog("Are you sure?", isPresented: $isPresentedSignOutConfirm) {
+                        Button("Sign Out", role: .destructive) {
+                            viewModel.signOutTapped()
+                            self.coordinator.push(.login) }
                     }
+                    
+                    Divider()
+                    
+                    Button {
+                        self.isPresentedDeleteAccountConfirm.toggle()
+                    } label: {
+                        HStack {
+                            Image(systemName: "xmark.shield")
+                                .foregroundStyle(.red)
+                            
+                            Text("Delete Account")
+                                .foregroundStyle(.red)
+                                .bold()
+                            
+                            Spacer()
+                        }
+                    }
+                    .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteAccountConfirm) {
+                        Button("DELETE ACCOUNT", role: .destructive) {
+                            viewModel.deleteAccountBy(id: self.loggedInUserID)
+                            self.loggedInUserID = ""
+                            self.coordinator.push(.login)
+                        }
+                    }
+                    
+                    Spacer()
                 }
+                .padding(.horizontal)
+                .padding(.top, 10)
                 
-                Spacer()
+                VStack(alignment: .center) {
+                    Text("Version 1.0.0")
+                    Text("© Copyright Berkay Sancar © \n All rights reserved.")
+                        .multilineTextAlignment(.center)
+                }
+                .font(.caption)
+                .padding(.bottom, 100)
             }
-            .padding(.horizontal)
-            .padding(.top, 10)
-            
-            VStack(alignment: .center) {
-                Text("Version 1.0.0")
-                Text("© Copyright Berkay Sancar © \n All rights reserved.")
-                    .multilineTextAlignment(.center)
-            }
-            .font(.caption)
-            .padding(.bottom, 100)
+            .padding(.top, 32)
         }
         .background(.appBackground)
     }

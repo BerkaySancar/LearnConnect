@@ -13,13 +13,6 @@ struct FavoritesView: View {
     
     @State private var isPresentedDeleteAllConfirm = false
     
-    var courses: [Course] = [
-//                  Course(title: "SwiftUI Essentials", imageName: "swift"),
-//                  Course(title: "Mastering Combine", imageName: "combine"),
-//                  Course(title: "iOS Animations", imageName: "animation"),
-//                  Course(title: "CoreData Deep Dive", imageName: "coredata")
-    ]
-    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -27,7 +20,7 @@ struct FavoritesView: View {
                     DefaultTopView(title: "Favorites")
                     HStack {
                         Spacer()
-                        if !courses.isEmpty {
+                        if !viewModel.courses.isEmpty {
                             Button {
                                 isPresentedDeleteAllConfirm.toggle()
                             } label: {
@@ -43,9 +36,10 @@ struct FavoritesView: View {
                         }
                     }
                     .padding(.trailing, 26)
+                    .padding(.top, 16)
                 }
                 
-                if courses.isEmpty {
+                if viewModel.courses.isEmpty {
                     EmptyContentView(
                         systemImage: "heart.slash.fill",
                         title: "No Favorites Yet",
@@ -58,6 +52,9 @@ struct FavoritesView: View {
        
                 Spacer()
             }
+            .onAppear {
+                viewModel.getCourses()
+            }
             .background(.appBackground)
         }
     }
@@ -69,9 +66,11 @@ extension FavoritesView {
     private func ContentView(geometry: GeometryProxy) -> some View {
         ScrollView {
             LazyVStack {
-                ForEach(courses) { course in
-                    CourseCardView(course: course)
-                        .frame(width: geometry.size.width - 32, height: 230)
+                ForEach(viewModel.courses) { course in
+                    CourseCardView(course: course) { _ in
+                        viewModel.favTapped(course: course)
+                    }
+                    .frame(width: geometry.size.width - 32, height: 230)
                 }
             }
         }

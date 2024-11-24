@@ -12,6 +12,10 @@ protocol CourseAPIServiceProtocol {
 }
 
 final class CourseAPIService: CourseAPIServiceProtocol {
+    
+    static let shared = CourseAPIService()
+    
+    private init () {}
         
     func fetchCourses(completion: @escaping (Result<[Course]?, NetworkError>) -> Void) {
         NetworkManager.shared.request(MockCourseAPI.getCourses, type: [Course].self) { results in
