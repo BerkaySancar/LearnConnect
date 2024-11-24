@@ -13,6 +13,7 @@ enum Route: Hashable {
     case signup
     case mainTabBar
     case courseDetail
+    case videoPlayer(_ videoURL: String)
 }
 
 final class Coordinator: ObservableObject {

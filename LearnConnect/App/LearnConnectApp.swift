@@ -43,6 +43,9 @@ struct LearnConnectApp: App {
                         case .courseDetail:
                             CourseDetailView()
                                 .environmentObject(self.coordinator)
+                        case .videoPlayer(let urlString):
+                            VideoPlayerView(videoURL: urlString)
+                                .navigationBarBackButtonHidden()
                         }
                     }
             }
@@ -53,7 +56,7 @@ struct LearnConnectApp: App {
     private func navBarAppearance() {
         let appearance = UINavigationBarAppearance()
         appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.appGreen]
-        UIBarButtonItem.appearance().tintColor = UIColor.black
+        UIBarButtonItem.appearance().tintColor = UIColor.appGreen
         UINavigationBar.appearance().standardAppearance = appearance
     }
 }

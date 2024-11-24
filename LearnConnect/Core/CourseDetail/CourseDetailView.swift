@@ -10,6 +10,8 @@ import AVKit
 
 struct CourseDetailView: View {
     
+    @EnvironmentObject private var coordinator: Coordinator
+    
     struct CourseModel {
         var id: Int
         var name: String
@@ -32,8 +34,16 @@ struct CourseDetailView: View {
         GeometryReader { geometry in
             VStack(alignment: .leading, spacing: 0) {
                 ThumbnailView(geometry: geometry)
-                InformationsView()
-                Spacer()
+                    .onTapGesture {
+                        if isJoined {
+                            coordinator.push(.videoPlayer(course.video))
+                        }
+                    }
+                ScrollView(.vertical) {
+                    InformationsView()
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity)
                 BottomButtonsView()
             }
         }
@@ -59,7 +69,7 @@ extension CourseDetailView {
                 .foregroundStyle(.white)
         }
         .ignoresSafeArea(edges: .top)
-        .frame(width: geometry.size.width, height: 220)
+        .frame(width: geometry.size.width, height: geometry.size.height / 3)
     }
     
     @ViewBuilder
@@ -67,6 +77,8 @@ extension CourseDetailView {
         VStack(alignment: .leading) {
             Text(course.name)
                 .font(.title)
+            
+            Text("Ali Veli")
             
             Text(course.description)
                 .padding(.top, 16)
