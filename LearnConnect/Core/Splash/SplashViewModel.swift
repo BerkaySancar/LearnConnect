@@ -12,8 +12,6 @@ import SystemConfiguration
 final class SplashViewModel: ObservableObject {
     
     @Published var presentNetworkAlert = false
-    
-    @Published var isAuthorized: Bool = false
     @Published var splashRoute: SplashRoute? = nil
     
     func splashAction() {
@@ -21,7 +19,7 @@ final class SplashViewModel: ObservableObject {
             guard let self else { return }
             if Reachability.isNetworkReachable() == false {
                 presentNetworkAlert.toggle()
-            } else if isAuthorized {
+            } else if DatabaseManager.shared.getCurrentUser() != nil {
                 self.splashRoute = .mainTabBar
             } else {
                 self.splashRoute = .onboarding

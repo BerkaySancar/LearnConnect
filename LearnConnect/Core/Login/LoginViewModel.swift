@@ -14,16 +14,23 @@ final class LoginViewModel: ObservableObject {
     
     @Published var activeAlert: LoginAlert = .loginFailed
     @Published var showAlert = false
+    @Published var showActivity = false
     
-    func loginTapped(completion: (String) -> Void) {
-        let user: User? = DatabaseManager.shared.getUsers().first { $0.email == email && $0.password == password }
-        
-        if let user = user,
-           let id = user.id {
-            completion(id)
-        } else {
-            activeAlert = .loginFailed
-            showAlert.toggle()
+    func loginTapped(completion: @escaping () -> Void) {
+        showActivity = true
+        AuthManager.shared.login(email: email, password: password) { [weak self] results in
+            guard let self else { return }
+            self.showActivity = false
+            switch results {
+            case .success(let currentUser):
+                if let user = currentUser {
+                    DatabaseManager.shared.addCurrentUser(id: user.id, name: user.name, email: user.email)
+                    completion()
+                }
+            case .failure(_):
+                activeAlert = .loginFailed
+                showAlert.toggle()
+            }
         }
     }
 }

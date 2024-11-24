@@ -47,7 +47,7 @@ struct SettingsView: View {
                 }
                 .confirmationDialog("Are you sure?", isPresented: $isPresentedSignOutConfirm) {
                     Button("Sign Out", role: .destructive) {
-                        self.loggedInUserID = ""
+                        viewModel.signOutTapped()
                         self.coordinator.push(.login) }
                 }
                 

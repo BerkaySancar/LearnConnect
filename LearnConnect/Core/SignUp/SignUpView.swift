@@ -13,11 +13,15 @@ struct SignUpView: View {
     @StateObject private var viewModel = SignUpViewModel()
     
     var body: some View {
-        VStack(spacing: 20) {
-            TopView()
-                .padding(.top, 20)
-            InputView()
-            Spacer()
+        ZStack {
+            VStack(spacing: 20) {
+                TopView()
+                    .padding(.top, 20)
+                InputView()
+                Spacer()
+            }
+            
+            CustomProgressView(isVisible: $viewModel.showActivity)
         }
         .alert(isPresented: $viewModel.showAlert) {
             switch viewModel.activeAlert {
@@ -61,8 +65,7 @@ extension SignUpView {
     private func InputView() -> some View {
         VStack {
             Group {
-                TextField("", text: $viewModel.firstName, prompt: Text("First Name"))
-                TextField("", text: $viewModel.lastName, prompt: Text("Last Name"))
+                TextField("", text: $viewModel.userName, prompt: Text("First Name"))
                 TextField("", text: $viewModel.email, prompt: Text("Email"))
                 SecureField("", text: $viewModel.password , prompt: Text("Password"))
             }

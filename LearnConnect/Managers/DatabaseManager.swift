@@ -34,40 +34,26 @@ final class DatabaseManager {
             }
         }
     }
-    
-    func getUsers() -> [User] {
+   
+    func getCurrentUser() -> User? {
         do {
             let users = try persistedContainer.viewContext.fetch(NSFetchRequest<User>(entityName: "User"))
-            return users
+            return users.first
         } catch {
             fatalError("CoreData fetch data failed. \(error.localizedDescription)")
         }
     }
-    
-    func addUser(name: String, surname: String, email: String, password: String) {
+  
+    func addCurrentUser(id: String, name: String, email: String ) {
         let user = User(context: context)
-        user.id = UUID().uuidString
+        user.id = id
         user.name = name
-        user.surname = surname
         user.email = email
-        user.password = password
         save()
     }
-    
-    func deleteAllUsers() {
-        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-        } catch {
-            print("Failed to delete all users: \(error)")
-        }
-    }
-    
-    func deleteUser(userId: String) {
-        if let user = getUsers().first(where: { $0.id == userId }) {
+       
+    func deleteCurrentUser() {
+        if let user = getCurrentUser() {
             context.delete(user)
             save()
         }

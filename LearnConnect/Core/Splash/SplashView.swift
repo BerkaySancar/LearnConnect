@@ -10,7 +10,6 @@ import SwiftUI
 struct SplashView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
-    @AppStorage("loggedInUserID") private var loggedInUserID = ""
     
     @StateObject private var viewModel = SplashViewModel()
 
@@ -31,7 +30,6 @@ struct SplashView: View {
                     .bold()
             }
             .onAppear {
-                self.viewModel.isAuthorized = self.loggedInUserID != ""
                 viewModel.splashAction()
             }
             .onChange(of: viewModel.splashRoute) { _, new in

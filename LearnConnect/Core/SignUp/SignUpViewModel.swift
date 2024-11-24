@@ -11,20 +11,29 @@ final class SignUpViewModel: ObservableObject {
     
     @Published var password: String = ""
     @Published var email: String = ""
-    @Published var firstName: String = ""
-    @Published var lastName: String = ""
+    @Published var userName: String = ""
     
     @Published var showAlert = false
     @Published var activeAlert: SignUpAlert = .signUpFailure
+    @Published var showActivity: Bool = false
     
     func signUpTapped() {
-        if firstName == "" || lastName == "" || email == "" || password == "" || password.count < 5 || !email.isValidEmail() {
+        if userName == "" || email == "" || password == "" || password.count < 5 || !email.isValidEmail() {
             activeAlert = .signUpFailure
             showAlert.toggle()
         } else {
-            DatabaseManager.shared.addUser(name: firstName, surname: lastName, email: email, password: password)
-            activeAlert = .signUpSuccess
-            showAlert.toggle()
+            self.showActivity.toggle()
+            AuthManager.shared.signUp(name: userName, email: email, password: password) { [weak self] results in
+                guard let self else { return }
+                self.showActivity.toggle()
+                switch results {
+                case .success(_):
+                    activeAlert = .signUpSuccess
+                case .failure(_):
+                    activeAlert = .signUpFailure
+                }
+                showAlert.toggle()
+            }
         }
     }
 }

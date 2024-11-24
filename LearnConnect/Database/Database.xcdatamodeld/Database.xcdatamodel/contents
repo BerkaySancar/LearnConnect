@@ -4,7 +4,5 @@
         <attribute name="email" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="name" optional="YES" attributeType="String"/>
-        <attribute name="password" optional="YES" attributeType="String"/>
-        <attribute name="surname" optional="YES" attributeType="String"/>
     </entity>
 </model>

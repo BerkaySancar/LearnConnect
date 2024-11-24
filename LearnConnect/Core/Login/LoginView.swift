@@ -10,26 +10,28 @@ import SwiftUI
 struct LoginView: View {
 
     @EnvironmentObject private var coordinator: Coordinator
-    @AppStorage("loggedInUserID") private var loggedInUserID = ""
-    @AppStorage("loggedUserName") private var userName = ""
     
     @StateObject private var viewModel = LoginViewModel()
     
     var body: some View {
-        VStack(spacing: 20) {
-            TopView()
-                .padding(.top, 20)
-            InputView()
-            Spacer()
-        }
-        .alert(isPresented: $viewModel.showAlert) {
-            switch viewModel.activeAlert {
-            case .loginFailed:
-                Alert(
-                    title: Text(LoginAlert.loginFailed.title),
-                    message: Text(LoginAlert.loginFailed.message)
-                )
+        ZStack {
+            VStack(spacing: 20) {
+                TopView()
+                    .padding(.top, 20)
+                InputView()
+                Spacer()
             }
+            .alert(isPresented: $viewModel.showAlert) {
+                switch viewModel.activeAlert {
+                case .loginFailed:
+                    Alert(
+                        title: Text(LoginAlert.loginFailed.title),
+                        message: Text(LoginAlert.loginFailed.message)
+                    )
+                }
+            }
+            
+            CustomProgressView(isVisible: $viewModel.showActivity)
         }
         .background(.appBackground)
     }
@@ -75,10 +77,7 @@ extension LoginView {
                 imageName: nil,
                 buttonText: "Login",
                 action: {
-                    viewModel.loginTapped { id in
-                        self.loggedInUserID = id
-                        coordinator.push(.mainTabBar)
-                    }
+                    viewModel.loginTapped { coordinator.push(.mainTabBar) }
                 },
                 imageTint: nil
             )

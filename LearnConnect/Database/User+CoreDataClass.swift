@@ -18,8 +18,6 @@ public class User: NSManagedObject, Identifiable {
 
     @NSManaged public var id: String?
     @NSManaged public var name: String?
-    @NSManaged public var surname: String?
     @NSManaged public var email: String?
-    @NSManaged public var password: String?
 }
 
