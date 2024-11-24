@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import FirebaseCore
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        FirebaseApp.configure()
+        return true
+    }
+}
 
 @main
 struct LearnConnectApp: App {
     
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     @AppStorage("isDarkMode") private var darkMode = false
     @StateObject private var coordinator: Coordinator = Coordinator()
     
