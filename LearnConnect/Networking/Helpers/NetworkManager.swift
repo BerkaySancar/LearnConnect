@@ -9,12 +9,16 @@ import Foundation
 
 final class NetworkManager {
     
+    static let shared = NetworkManager()
+    
     private let decoder = JSONDecoder()
     
     private var isReachable: Bool {
         return Reachability.isNetworkReachable()
     }
     
+    private init() {}
+
     func request<T: Codable>(_ request: URLRequestConvertible, type: T.Type, completion: @escaping (Result<T?, NetworkError>) -> Void) {
         if isReachable {
             URLSession.shared.dataTask(with: request.urlRequest()) { (data, response, error) in
