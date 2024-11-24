@@ -57,16 +57,12 @@ struct CourseCardView: View {
                     
                     HStack {
                         Spacer()
-                        Button {
-                            
-                        } label: {
-                            Text("Android")
-                                .font(.system(size: 16))
-                                .padding()
-                                .frame(height: 40)
-                                .foregroundStyle(.appGreen)
-                                .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.appWhiteText))
-                        }
+                        Text("Android")
+                            .font(.system(size: 16))
+                            .padding()
+                            .frame(height: 40)
+                            .foregroundStyle(.appGreen)
+                            .background(RoundedRectangle(cornerRadius: 16).foregroundStyle(.appWhiteText))
                     }
                     .offset(y: 55)
                     .padding(.trailing, 8)
