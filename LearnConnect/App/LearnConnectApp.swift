@@ -50,8 +50,8 @@ struct LearnConnectApp: App {
                             MainTabbarView()
                                 .navigationBarBackButtonHidden()
                                 .environmentObject(self.coordinator)
-                        case .courseDetail:
-                            CourseDetailView()
+                        case .courseDetail(let course):
+                            CourseDetailView(course: course)
                                 .environmentObject(self.coordinator)
                         case .videoPlayer(let urlString):
                             VideoPlayerView(videoURL: urlString)

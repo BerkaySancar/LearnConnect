@@ -13,16 +13,8 @@ struct HomeView: View {
     @EnvironmentObject private var coordinator: Coordinator
     @AppStorage("isDarkMode") private var darkMode = false
     
-    @State private var text = ""
     @Binding var selectedTab: Int
-    
-    var courses: [Course] = [
-          Course(title: "SwiftUI Essentials", imageName: "swift"),
-          Course(title: "Mastering Combine", imageName: "combine"),
-          Course(title: "iOS Animations", imageName: "animation"),
-          Course(title: "CoreData Deep Dive", imageName: "coredata")
-      ]
-        
+            
     var body: some View {
         GeometryReader { geometry in
             VStack {
@@ -62,7 +54,7 @@ extension HomeView {
                         .foregroundStyle(.appWhiteText)
                         .padding(.top, 8)
                        
-                CustomSearchBarView(text: $text, searchDisabled: true)
+                CustomSearchBarView(text: $viewModel.searchText, searchDisabled: true)
                     .padding(.top, 16)
                     .onTapGesture {
                         selectedTab = 1
@@ -83,13 +75,13 @@ extension HomeView {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: [GridItem(.fixed(500))], spacing: 0) {
-                    ForEach(courses) { course in
+                    ForEach(viewModel.courses) { course in
                         VStack {
                             CourseCardView(course: course)
                                 .padding(.leading, 16)
                                 .frame(width: geometry.size.width / 1.34, height: 220)
                                 .onTapGesture {
-                                    coordinator.push(.courseDetail)
+                                    coordinator.push(.courseDetail(course))
                                 }
                         }
                     }
@@ -113,8 +105,7 @@ extension HomeView {
                 LazyHGrid(rows: [GridItem(.flexible(minimum: 1))], spacing: 16) {
                     ForEach(0...5, id: \.self) { category in
                         Button {
-                            //                        viewModel.getCategoryProducts(category: category)
-                            //                        viewModel.selectedCategory = category
+                            
                         } label : {
                             VStack {
                                 Image(systemName: "gear")
@@ -146,14 +137,6 @@ extension HomeView {
             .frame(height: 180)
         }
     }
-    
-}
-
-
-struct Course: Identifiable {
-    let id = UUID()
-    let title: String
-    let imageName: String
 }
 
 #Preview {

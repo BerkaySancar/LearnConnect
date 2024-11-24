@@ -12,7 +12,7 @@ enum Route: Hashable {
     case login
     case signup
     case mainTabBar
-    case courseDetail
+    case courseDetail(_ course: Course)
     case videoPlayer(_ videoURL: String)
 }
 

@@ -14,10 +14,10 @@ struct ProfileView: View {
     @StateObject private var viewModel = ProfileViewModel()
     
     var courses: [Course] = [
-                Course(title: "SwiftUI Essentials", imageName: "swift"),
-                Course(title: "Mastering Combine", imageName: "combine"),
-                Course(title: "iOS Animations", imageName: "animation"),
-                Course(title: "CoreData Deep Dive", imageName: "coredata")
+//                Course(title: "SwiftUI Essentials", imageName: "swift"),
+//                Course(title: "Mastering Combine", imageName: "combine"),
+//                Course(title: "iOS Animations", imageName: "animation"),
+//                Course(title: "CoreData Deep Dive", imageName: "coredata")
     ]
         
     var body: some View {
@@ -58,7 +58,7 @@ struct ProfileView: View {
                                             }
                                             
                                             VStack(alignment: .leading, spacing: 0) {
-                                                Text(course.title)
+                                                Text(course.name)
                                                     .font(.headline)
                                                     .padding(.bottom, 4)
                                                 Text("Ali Veli")

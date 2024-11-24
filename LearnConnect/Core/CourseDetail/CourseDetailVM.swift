@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+final class CourseDetailVM: ObservableObject {
+    
+    var course: Course
+    
+    init(course: Course) {
+        self.course = course
+    }
+}

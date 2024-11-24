@@ -12,23 +12,13 @@ struct CourseDetailView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
     
-    struct CourseModel {
-        var id: Int
-        var name: String
-        var description: String
-        var thumbnail: String
-        var video: String
-    }
+    @ObservedObject private var viewModel: CourseDetailVM
     
-    var course = CourseModel(
-        id: 1,
-        name: "SwiftUI",
-        description: "ASdasdasda sdaksjdhalkjsdas dasdah skdha skdha skdh aklshd ashjd aksdasd asd asd asd asd asdassss.",
-        thumbnail: "https://picsum.photos/200/300",
-        video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    )
-    
-    var isJoined: Bool = false
+    init(course: Course) {
+        self._viewModel = ObservedObject(wrappedValue: CourseDetailVM(course: course))
+      }
+        
+    var isJoined: Bool = true
     
     var body: some View {
         GeometryReader { geometry in
@@ -36,7 +26,7 @@ struct CourseDetailView: View {
                 ThumbnailView(geometry: geometry)
                     .onTapGesture {
                         if isJoined {
-                            coordinator.push(.videoPlayer(course.video))
+                            coordinator.push(.videoPlayer(viewModel.course.video))
                         }
                     }
                 ScrollView(.vertical) {
@@ -46,6 +36,7 @@ struct CourseDetailView: View {
                 .frame(maxWidth: .infinity)
                 BottomButtonsView()
             }
+            .background(.appBackground)
         }
     }
 }
@@ -55,7 +46,7 @@ extension CourseDetailView {
     @ViewBuilder
     private func ThumbnailView(geometry: GeometryProxy) -> some View {
         ZStack {
-            AsyncImage(url: URL(string: course.thumbnail)!) { image in
+            AsyncImage(url: URL(string: viewModel.course.thumbnail)!) { image in
                 image
                     .resizable()
                     .cornerRadius(16)
@@ -75,12 +66,12 @@ extension CourseDetailView {
     @ViewBuilder
     private func InformationsView() -> some View {
         VStack(alignment: .leading) {
-            Text(course.name)
+            Text(viewModel.course.name)
                 .font(.title)
             
-            Text("Ali Veli")
+            Text(viewModel.course.instructor)
             
-            Text(course.description)
+            Text(viewModel.course.description)
                 .padding(.top, 16)
                 .font(.subheadline)
         }
@@ -116,5 +107,5 @@ extension CourseDetailView {
 }
 
 #Preview {
-    CourseDetailView()
+    CourseDetailView(course: .example)
 }

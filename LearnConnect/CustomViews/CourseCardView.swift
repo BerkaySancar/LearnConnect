@@ -17,7 +17,7 @@ struct CourseCardView: View {
         GeometryReader { geometry in
             VStack(alignment: .center, spacing: 0) {
                 ZStack {
-                    AsyncImage(url: .init(string: "https://images.theconversation.com/files/374729/original/file-20201214-19-dtt9f5.jpg")!) { image in
+                    AsyncImage(url: .init(string: course.thumbnail)!) { image in
                         image
                             .resizable()
                             .scaledToFill()
@@ -57,7 +57,7 @@ struct CourseCardView: View {
                     
                     HStack {
                         Spacer()
-                        Text("Android")
+                        Text(course.category.name)
                             .font(.system(size: 16))
                             .padding()
                             .frame(height: 40)
@@ -70,14 +70,12 @@ struct CourseCardView: View {
                 
                 Group {
                     HStack {
-                        VStack {
-                            Text(course.title)
-                                .font(.subheadline)
-                                .bold()
-                            
-                            Text(course.title)
-                                .font(.subheadline)
-                                .bold()
+                        VStack(alignment: .leading) {
+                            Text(course.name)
+                                .font(.headline)
+            
+                            Text(course.instructor)
+                                .font(.callout)
                         }
                         Spacer()
                     }
@@ -90,5 +88,5 @@ struct CourseCardView: View {
 }
 
 #Preview {
-    CourseCardView(course:  Course(title: "SwiftUI Essentials", imageName: "swift"))
+    CourseCardView(course: Course.example)
 }
