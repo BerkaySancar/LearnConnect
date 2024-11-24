@@ -23,7 +23,7 @@ final class SignUpViewModel: ObservableObject {
             showAlert.toggle()
         } else {
             self.showActivity.toggle()
-            AuthManager.shared.signUp(name: userName, email: email, password: password) { [weak self] results in
+            AuthService.shared.signUp(name: userName, email: email, password: password) { [weak self] results in
                 guard let self else { return }
                 self.showActivity.toggle()
                 switch results {

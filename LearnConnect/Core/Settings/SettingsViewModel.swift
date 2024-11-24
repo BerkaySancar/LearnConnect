@@ -10,10 +10,11 @@ import Foundation
 final class SettingsViewModel: ObservableObject {
     
     func signOutTapped() {
-        AuthManager.shared.signOut { results in
+        AuthService.shared.signOut { results in
             switch results {
             case .success(_):
-                DatabaseManager.shared.deleteCurrentUser()
+                CurrentUserService.shared.deleteCurrentUser()
+//                DatabaseManager.shared.deleteCurrentUser()
             case .failure(let failure):
                 print(failure)
             }

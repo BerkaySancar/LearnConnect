@@ -18,13 +18,13 @@ final class LoginViewModel: ObservableObject {
     
     func loginTapped(completion: @escaping () -> Void) {
         showActivity = true
-        AuthManager.shared.login(email: email, password: password) { [weak self] results in
+        AuthService.shared.login(email: email, password: password) { [weak self] results in
             guard let self else { return }
             self.showActivity = false
             switch results {
             case .success(let currentUser):
                 if let user = currentUser {
-                    DatabaseManager.shared.addCurrentUser(id: user.id, name: user.name, email: user.email)
+                    CurrentUserService.shared.addCurrentUser(id: user.id, name: user.name, email: user.email)
                     completion()
                 }
             case .failure(_):

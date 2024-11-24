@@ -1,5 +1,5 @@
 //
-//  AuthManager.swift
+//  AuthService.swift
 //  LearnConnect
 //
 //  Created by Berkay Sancar on 24.11.2024.
@@ -10,15 +10,15 @@ import Foundation
 import FirebaseAuth
 import FirebaseCore
 
-protocol AuthManagerProtocol {
+protocol AuthServiceProtocol {
     func login(email: String, password: String, completion: @escaping (Result<(CurrentUser)?, AuthError>) -> Void)
     func signUp(name: String, email: String, password: String, completion: @escaping (Result<Void, AuthError>) -> Void)
     func signOut(completion: (Result<Void, AuthError>) -> Void)
 }
 
-final class AuthManager: AuthManagerProtocol {
+final class AuthService: AuthServiceProtocol {
     
-    static let shared = AuthManager()
+    static let shared = AuthService()
     
     private let auth = Auth.auth()
     

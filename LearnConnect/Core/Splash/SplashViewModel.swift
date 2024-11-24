@@ -19,7 +19,7 @@ final class SplashViewModel: ObservableObject {
             guard let self else { return }
             if Reachability.isNetworkReachable() == false {
                 presentNetworkAlert.toggle()
-            } else if DatabaseManager.shared.getCurrentUser() != nil {
+            } else if CurrentUserService.shared.getCurrentUser() != nil {
                 self.splashRoute = .mainTabBar
             } else {
                 self.splashRoute = .onboarding

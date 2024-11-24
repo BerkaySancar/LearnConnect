@@ -1,28 +1,21 @@
 //
-//  DatabaseManager.swift
+//  CurrentUserService.swift
 //  LearnConnect
 //
-//  Created by Berkay Sancar on 22.11.2024.
+//  Created by Berkay Sancar on 24.11.2024.
 //
 
-import CoreData
+import CoreData.NSManagedObjectContext
 import Foundation
 
-final class DatabaseManager {
+final class CurrentUserService {
     
-    static let shared = DatabaseManager()
+    static let shared = CurrentUserService()
     
-    private let persistedContainer = NSPersistentContainer(name: "Database")
-    private var context: NSManagedObjectContext {
-        return persistedContainer.viewContext
-    }
+    private let context: NSManagedObjectContext
     
-    private init() {
-        persistedContainer.loadPersistentStores(completionHandler: { _, error in
-            if let error {
-                fatalError("CoreData load failed. \(error.localizedDescription)")
-            }
-        })
+    private init(context: NSManagedObjectContext = DatabaseManager.shared.context) {
+        self.context = context
     }
     
     private func save() {
@@ -37,7 +30,7 @@ final class DatabaseManager {
    
     func getCurrentUser() -> User? {
         do {
-            let users = try persistedContainer.viewContext.fetch(NSFetchRequest<User>(entityName: "User"))
+            let users = try context.fetch(NSFetchRequest<User>(entityName: "User"))
             return users.first
         } catch {
             fatalError("CoreData fetch data failed. \(error.localizedDescription)")
