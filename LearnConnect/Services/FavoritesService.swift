@@ -47,10 +47,6 @@ final class FavoritesService {
             save()
         }
     }
-    
-    func isAlreadyFavorited(id: String) -> Bool {
-        getFavorites().contains(where: { $0.id == id })
-    }
 
     private func save() {
         if context.hasChanges {
@@ -59,6 +55,18 @@ final class FavoritesService {
             } catch {
                 fatalError("CoreData save failed. \(error.localizedDescription)")
             }
+        }
+    }
+    
+    func delete() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Favorite")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print("Failed to delete all favorites: \(error)")
         }
     }
 }

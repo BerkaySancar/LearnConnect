@@ -51,4 +51,16 @@ final class CurrentUserService {
             save()
         }
     }
+    
+    func delete() {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "User")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+        } catch {
+            print("Failed to delete all users: \(error)")
+        }
+    }
 }

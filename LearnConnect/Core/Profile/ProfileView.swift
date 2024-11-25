@@ -13,10 +13,6 @@ struct ProfileView: View {
     
     @StateObject private var viewModel = ProfileViewModel()
     
-    var courses: [Course] = [
-        .example
-    ]
-    
     var body: some View {
         GeometryReader { geometry in
             VStack(alignment: .leading) {
@@ -26,7 +22,7 @@ struct ProfileView: View {
                     
                     CourseStatusView()
                     
-                    if !courses.isEmpty {
+                    if !viewModel.enrolledCourses.isEmpty {
                         VStack(alignment: .leading, spacing: 0) {
                             Text("My Courses")
                                 .font(.title3.bold())
@@ -34,9 +30,9 @@ struct ProfileView: View {
                                 .padding(.leading, 16)
                             
                             LazyVStack {
-                                ForEach(courses) { course in
+                                ForEach(viewModel.enrolledCourses, id: \.self) { enrolledCourse in
                                     HStack {
-                                        AsyncImage(url: .init(string: "https://images.theconversation.com/files/374729/original/file-20201214-19-dtt9f5.jpg")!) { image in
+                                        AsyncImage(url: .init(string: enrolledCourse.thumbnail ?? "")!) { image in
                                             image
                                                 .resizable()
                                                 .scaledToFill()
@@ -49,15 +45,13 @@ struct ProfileView: View {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 16)
                                                     .foregroundStyle(.gray)
-                                                    .frame(width: 100, height: 100)
+                                                    .frame(width: 140, height: 100)
                                             }
                                         }
                                         
                                         VStack(alignment: .leading, spacing: 0) {
-                                            Text(course.name)
+                                            Text(enrolledCourse.courseName ?? "")
                                                 .font(.headline)
-                                                .padding(.bottom, 4)
-                                            Text("Ali Veli")
                                                 .padding(.bottom, 16)
                                             
                                             ProgressView("%30 Complete", value: 30, total: 100)
@@ -76,6 +70,10 @@ struct ProfileView: View {
                     Spacer()
                 }
             }
+            .onAppear {
+                viewModel.getEnrolledCourses()
+            }
+            .padding(.bottom, 70)
             .background(.appBackground)
         }
     }
@@ -101,9 +99,9 @@ extension ProfileView {
             }
             
             VStack(alignment: .leading) {
-                Text("Berkay Sancar")
+                Text(viewModel.currentUser?.name ?? "")
                     .font(.title2.bold())
-                Text(verbatim: "berkay@mail.com")
+                Text(verbatim: viewModel.currentUser?.email ?? "")
                     .font(.callout)
             }
             .foregroundStyle(darkMode ? .white : .black)
@@ -131,7 +129,7 @@ extension ProfileView {
                         Text("Enrolled Courses")
                             .font(.headline)
                         
-                        Text("3")
+                        Text("\(viewModel.enrolledCourses.count)")
                             .font(.title2)
                     }
                     .padding(.leading, 36)
@@ -139,7 +137,7 @@ extension ProfileView {
                     Spacer()
                     
                     VStack(spacing: 12) {
-                        Text("Total Courses")
+                        Text("Completed Courses")
                             .font(.headline)
                         
                         Text("5")

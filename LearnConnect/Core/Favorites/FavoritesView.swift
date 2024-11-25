@@ -9,6 +9,7 @@ import SwiftUI
 
 struct FavoritesView: View {
     
+    @EnvironmentObject private var coordinator: Coordinator
     @StateObject private var viewModel = FavoritesViewModel()
     
     @State private var isPresentedDeleteAllConfirm = false
@@ -69,6 +70,9 @@ extension FavoritesView {
                 ForEach(viewModel.courses) { course in
                     CourseCardView(course: course) { _ in
                         viewModel.favTapped(course: course)
+                    }
+                    .onTapGesture {
+                        coordinator.push(.courseDetail(course))
                     }
                     .frame(width: geometry.size.width - 32, height: 230)
                 }

@@ -65,7 +65,7 @@ final class EnrolledCoursesService {
             try context.execute(deleteRequest)
             try context.save()
         } catch {
-            print("Failed to delete all users: \(error)")
+            print("Failed to delete all enrolled courses: \(error)")
         }
     }
 }

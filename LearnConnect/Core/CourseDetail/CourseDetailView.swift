@@ -12,21 +12,19 @@ struct CourseDetailView: View {
     
     @EnvironmentObject private var coordinator: Coordinator
     
-    @ObservedObject private var viewModel: CourseDetailVM
+    @StateObject private var viewModel: CourseDetailVM
     
     init(course: Course) {
-        self._viewModel = ObservedObject(wrappedValue: CourseDetailVM(course: course))
+        self._viewModel = StateObject(wrappedValue: CourseDetailVM(course: course))
       }
         
-    var isJoined: Bool = false
-    
     var body: some View {
         GeometryReader { geometry in
             VStack {
                 VStack(alignment: .leading, spacing: 0) {
                     ThumbnailView(geometry: geometry)
                         .onTapGesture {
-                            if isJoined {
+                            if viewModel.isJoined {
                                 coordinator.push(.videoPlayer(viewModel.course.video))
                             }
                         }
@@ -43,6 +41,12 @@ struct CourseDetailView: View {
                 .background(.appBackground)
                 
                 Spacer()
+            }
+            .alert(isPresented: $viewModel.showJoinedAlert) {
+                Alert(
+                    title: Text("Enrolled Successfully"),
+                    message: Text("You have successfully enrolled in the course. You can now start watching and learning!")
+                )
             }
         }
     }
@@ -62,11 +66,10 @@ extension CourseDetailView {
                     .foregroundStyle(.gray)
             }
             
-            Image(systemName: isJoined ? "play.fill": "play.slash.fill")
+            Image(systemName: viewModel.isJoined ? "play.fill": "play.slash.fill")
                 .font(.system(size: 48))
                 .foregroundStyle(.white)
         }
-//        .ignoresSafeArea(edges: .top)
         .padding(.horizontal, 16)
         .frame(width: geometry.size.width, height: 220)
     }
@@ -106,22 +109,20 @@ extension CourseDetailView {
     @ViewBuilder
     private func BottomButtonsView() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            if !isJoined {
-                CustomButton(
-                    imageName: "plus",
-                    buttonText: "Join the Course",
-                    action: {
-                        
-                    },
-                    imageTint: .white
-                )
-            }
+            CustomButton(
+                imageName: viewModel.isJoined ? "person.crop.circle.badge.minus" : "person.crop.circle.badge.plus",
+                buttonText: viewModel.isJoined ? "Leave the Course" : "Join the Course",
+                action: {
+                    viewModel.joinCourseTapped()
+                },
+                imageTint: .white
+            )
             
             CustomButton(
-                imageName: "heart",
-                buttonText: "Add favorite the course",
+                imageName: viewModel.course.isFavorite ? "heart.fill" : "heart",
+                buttonText: viewModel.course.isFavorite ? "Remove from Favorites" : "Add to Favorites",
                 action: {
-                    
+                    viewModel.addToFavoriteTapped()
                 },
                 imageTint: .white
             )
