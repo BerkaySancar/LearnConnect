@@ -23,50 +23,8 @@ struct ProfileView: View {
                     CourseStatusView()
                     
                     if !viewModel.enrolledCourses.isEmpty {
-                        VStack(alignment: .leading, spacing: 0) {
-                            Text("My Courses")
-                                .font(.title3.bold())
-                                .foregroundStyle(darkMode ? .white : .black)
-                                .padding(.leading, 16)
-                            
-                            LazyVStack {
-                                ForEach(viewModel.enrolledCourses, id: \.self) { enrolledCourse in
-                                    HStack {
-                                        AsyncImage(url: .init(string: enrolledCourse.thumbnail ?? "")!) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFill()
-                                                .frame(width: 140, height: 100)
-                                                .overlay(
-                                                    Color.black.opacity(0.5)
-                                                )
-                                                .clipShape(RoundedRectangle(cornerRadius: 16))
-                                        } placeholder: {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 16)
-                                                    .foregroundStyle(.gray)
-                                                    .frame(width: 140, height: 100)
-                                            }
-                                        }
-                                        
-                                        VStack(alignment: .leading, spacing: 0) {
-                                            Text(enrolledCourse.courseName ?? "")
-                                                .font(.headline)
-                                                .padding(.bottom, 16)
-                                            
-                                            ProgressView("%30 Complete", value: 30, total: 100)
-                                                .tint(.appGreen)
-                                        }
-                                    }
-                                    .padding(.top, 16)
-                                    .padding(.trailing, 12)
-                                    .padding(.leading, 16)
-                                }
-                            }
-                        }
-                        .padding(.top, 16)
+                        MyCoursesView()
                     }
-                    
                     Spacer()
                 }
             }
@@ -129,7 +87,7 @@ extension ProfileView {
                         Text("Enrolled Courses")
                             .font(.headline)
                         
-                        Text("\(viewModel.enrolledCourses.count)")
+                        Text("\(viewModel.enrolledCourseCount)")
                             .font(.title2)
                     }
                     .padding(.leading, 36)
@@ -140,7 +98,7 @@ extension ProfileView {
                         Text("Completed Courses")
                             .font(.headline)
                         
-                        Text("5")
+                        Text("\(viewModel.completedCourseCount)")
                             .font(.title2)
                     }
                     
@@ -149,11 +107,19 @@ extension ProfileView {
                 .padding(.top, 16)
                 
                 HStack(spacing: 0) {
-                    SimpleDonutChart(completed: 1, total: 3)
+                    if viewModel.enrolledCourseCount < 1 {
+                        SimpleDonutChart(completed: 0.01,
+                                         total: 0.01
+                        )
                         .padding(.leading, 100)
-                    
+                    } else {
+                        SimpleDonutChart(completed: Double(viewModel.completedCourseCount),
+                                         total: Double(viewModel.enrolledCourseCount)
+                        )
+                        .padding(.leading, 100)
+                    }
                     VStack {
-                        Text("%\(Double(1) / Double(3) * 100, specifier: "%.1f")")
+                        Text(viewModel.progressPercentage <= 1 ? "%0" : "%\(viewModel.progressPercentage)")
                             .font(.title).bold()
                         Text("Progress")
                     }
@@ -162,35 +128,54 @@ extension ProfileView {
             }
         }
     }
-}
-
-import Charts
-
-struct SimpleDonutChart: View {
-    let completed: Double
-    let total: Double
     
-    var remaining: Double {
-        max(total - completed, 0)
-    }
-    
-    var body: some View {
-        Chart {
-            SectorMark(
-                angle: .value("Completed", completed),
-                innerRadius: .ratio(0.5),
-                outerRadius: .ratio(1.0)
-            )
-            .foregroundStyle(.appGreen)
+    @ViewBuilder
+    private func MyCoursesView() -> some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("My Courses")
+                .font(.title3.bold())
+                .foregroundStyle(darkMode ? .white : .black)
+                .padding(.leading, 16)
             
-            SectorMark(
-                angle: .value("Remaining", remaining),
-                innerRadius: .ratio(0.5),
-                outerRadius: .ratio(1.0)
-            )
-            .foregroundStyle(.orange)
+            LazyVStack {
+                ForEach(viewModel.enrolledCourses, id: \.self) { enrolledCourse in
+                    HStack {
+                        AsyncImage(url: .init(string: enrolledCourse.thumbnail ?? "")) { image in
+                            image
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 140, height: 100)
+                                .overlay(
+                                    Color.black.opacity(0.5)
+                                )
+                                .clipShape(RoundedRectangle(cornerRadius: 16))
+                        } placeholder: {
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 16)
+                                    .foregroundStyle(.gray)
+                                    .frame(width: 140, height: 100)
+                            }
+                        }
+                        
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(enrolledCourse.courseName ?? "")
+                                .font(.headline)
+                                .padding(.bottom, 16)
+                            
+                            ProgressView(
+                                "\(viewModel.calculateProgress(for: enrolledCourse))% Complete",
+                                value: max(enrolledCourse.videoCurrentTime, 0.01),
+                                total: max(enrolledCourse.videoDuration, 100)
+                            )
+                            .tint(.appGreen)
+                        }
+                    }
+                    .padding(.top, 16)
+                    .padding(.trailing, 12)
+                    .padding(.leading, 16)
+                }
+            }
         }
-        .frame(height: 100)
-        .padding()
+        .padding(.top, 16)
     }
 }

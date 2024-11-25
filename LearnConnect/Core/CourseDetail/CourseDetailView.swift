@@ -25,7 +25,7 @@ struct CourseDetailView: View {
                     ThumbnailView(geometry: geometry)
                         .onTapGesture {
                             if viewModel.isJoined {
-                                coordinator.push(.videoPlayer(viewModel.course.video))
+                                coordinator.push(.videoPlayer(viewModel.course))
                             }
                         }
                     ScrollView(.vertical) {

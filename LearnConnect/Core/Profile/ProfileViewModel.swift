@@ -15,6 +15,19 @@ final class ProfileViewModel: ObservableObject {
     @Published var enrolledCourses: [EnrolledCourses] = []
     var currentUser: User?
     
+    var enrolledCourseCount: Int {
+        return enrolledCourses.count
+    }
+    
+    var completedCourseCount: Int {
+        return enrolledCourses.filter { $0.isCompleted }.count
+    }
+    
+    var progressPercentage: Int {
+        guard enrolledCourseCount > 0 else { return 1 }
+        return Int((Double(completedCourseCount) / Double(enrolledCourseCount) * 100))
+    }
+    
     init(enrolledCoursesService: EnrolledCoursesService = .shared,
          currentUserService: CurrentUserService = .shared) {
         self.enrolledCoursesService = enrolledCoursesService
@@ -29,5 +42,10 @@ final class ProfileViewModel: ObservableObject {
     
     func getCurrentUser() {
         self.currentUser = self.currentUserService.getCurrentUser()
+    }
+    
+    func calculateProgress(for course: EnrolledCourses) -> Int {
+        guard course.videoDuration > 0 else { return 1 }
+        return Int((course.videoCurrentTime / course.videoDuration) * 100)
     }
 }

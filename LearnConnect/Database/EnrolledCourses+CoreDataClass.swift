@@ -21,4 +21,7 @@ public class EnrolledCourses: NSManagedObject, Identifiable {
     @NSManaged public var courseId: String?
     @NSManaged public var courseName: String?
     @NSManaged public var thumbnail: String?
+    @NSManaged public var videoDuration: Double
+    @NSManaged public var videoCurrentTime: Double
+    @NSManaged public var isCompleted: Bool
 }

@@ -27,6 +27,9 @@ final class EnrolledCoursesService {
         enrolledCourse.userId = currentUserService.getCurrentUser()?.id
         enrolledCourse.thumbnail = course.thumbnail
         enrolledCourse.courseName = course.name
+        enrolledCourse.videoDuration = 0.0
+        enrolledCourse.videoCurrentTime = 0.0
+        enrolledCourse.isCompleted = false
         save()
     }
     
@@ -37,6 +40,27 @@ final class EnrolledCoursesService {
         } catch {
             print("Failed to fetch enrolled courses: \(error.localizedDescription)")
             return []
+        }
+    }
+    
+    func updateCourseVideoDuration(courseId: String, videoDuration: Double) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+            enrolledCourse.videoDuration = videoDuration
+            save()
+        }
+    }
+    
+    func updateCourseVideoCurrentTime(courseId: String, currentTime: Double) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+            enrolledCourse.videoCurrentTime = currentTime
+            save()
+        }
+    }
+    
+    func updateCourseCompletion(courseId: String, isCompleted: Bool) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+            enrolledCourse.isCompleted = isCompleted
+            save()
         }
     }
     

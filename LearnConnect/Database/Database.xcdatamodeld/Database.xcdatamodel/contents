@@ -4,8 +4,11 @@
         <attribute name="courseId" optional="YES" attributeType="String"/>
         <attribute name="courseName" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="isCompleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="thumbnail" optional="YES" attributeType="String"/>
         <attribute name="userId" optional="YES" attributeType="String"/>
+        <attribute name="videoCurrentTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="videoDuration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="Favorite" representedClassName="Favorite" syncable="YES">
         <attribute name="category" optional="YES" attributeType="String"/>
