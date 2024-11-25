@@ -14,6 +14,7 @@ protocol AuthServiceProtocol {
     func login(email: String, password: String, completion: @escaping (Result<(CurrentUser)?, AuthError>) -> Void)
     func signUp(name: String, email: String, password: String, completion: @escaping (Result<Void, AuthError>) -> Void)
     func signOut(completion: (Result<Void, AuthError>) -> Void)
+    func deleteAccount()
 }
 
 final class AuthService: AuthServiceProtocol {
@@ -66,6 +67,16 @@ final class AuthService: AuthServiceProtocol {
             completion(.success(()))
         } catch {
             completion(.failure(.signOutError))
+        }
+    }
+    
+    func deleteAccount() {
+        let user = auth.currentUser
+        
+        user?.delete { error in
+            if let error {
+                print("Account deletion failed. \(error.localizedDescription)")
+            }
         }
     }
 }

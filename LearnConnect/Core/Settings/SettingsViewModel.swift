@@ -9,20 +9,28 @@ import Foundation
 
 final class SettingsViewModel: ObservableObject {
     
+    private let authService: AuthServiceProtocol
+    private let currentUserService: CurrentUserService
+    
+    init(authService: AuthService = .shared,
+         currentUserService: CurrentUserService = .shared) {
+        self.authService = authService
+        self.currentUserService = currentUserService
+    }
+    
     func signOutTapped() {
-        AuthService.shared.signOut { results in
+        authService.signOut { results in
             switch results {
             case .success(_):
-                CurrentUserService.shared.deleteCurrentUser()
-//                DatabaseManager.shared.deleteCurrentUser()
+                currentUserService.deleteCurrentUser()
             case .failure(let failure):
                 print(failure)
             }
-          
         }
     }
     
     func deleteAccountBy(id: String) {
-//        DatabaseManager.shared.deleteUser(userId: id)
+        authService.deleteAccount()
+        currentUserService.deleteCurrentUser()
     }
 }
