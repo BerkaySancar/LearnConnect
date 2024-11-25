@@ -110,7 +110,7 @@ extension HomeView {
                 LazyHGrid(rows: [GridItem(.flexible(minimum: 1))], spacing: 16) {
                     ForEach(viewModel.categories, id: \.self) { category in
                         Button {
-                            
+                            coordinator.push(.categoryCourses(viewModel.courses, category.name))
                         } label : {
                             VStack {
                                 Image(category.image)

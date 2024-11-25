@@ -56,6 +56,9 @@ struct LearnConnectApp: App {
                         case .videoPlayer(let course):
                             VideoPlayerView(course: course)
                                 .navigationBarBackButtonHidden()
+                        case .categoryCourses(let courses, let category):
+                            CategoryCoursesView(courses: courses, category: category)
+                                .environmentObject(self.coordinator)
                         }
                     }
             }

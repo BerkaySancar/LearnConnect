@@ -13,10 +13,10 @@ struct DefaultTopView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 24)
-                .fill(LinearGradient(colors: [.appGreen, .linearGreen],
-                                     startPoint: .top,
-                                     endPoint: .bottom))
+            LinearGradient(colors: [.appGreen, .linearGreen],
+                           startPoint: .top,
+                           endPoint: .bottom)
+                .clipShape(RoundedCornersShape(radius: 24, corners: [.bottomLeft, .bottomRight]))
                 .ignoresSafeArea(edges: .top)
                 .frame(height: 60)
             
@@ -29,7 +29,20 @@ struct DefaultTopView: View {
                     .padding(.bottom, 8)
             }
         }
-        .frame(height: 50)
+    }
+}
+
+struct RoundedCornersShape: Shape {
+    var radius: CGFloat
+    var corners: UIRectCorner
+
+    func path(in rect: CGRect) -> Path {
+        let path = UIBezierPath(
+            roundedRect: rect,
+            byRoundingCorners: corners,
+            cornerRadii: CGSize(width: radius, height: radius)
+        )
+        return Path(path.cgPath)
     }
 }
 

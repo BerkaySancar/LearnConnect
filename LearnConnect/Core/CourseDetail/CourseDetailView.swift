@@ -38,10 +38,10 @@ struct CourseDetailView: View {
                     Spacer()
                     
                 }
-                .background(.appBackground)
                 
                 Spacer()
             }
+            .background(.appBackground)
             .alert(isPresented: $viewModel.showJoinedAlert) {
                 Alert(
                     title: Text("Enrolled Successfully"),

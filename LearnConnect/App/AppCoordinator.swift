@@ -14,6 +14,7 @@ enum Route: Hashable {
     case mainTabBar
     case courseDetail(_ course: Course)
     case videoPlayer(_ course: Course)
+    case categoryCourses(_ courses: [Course], _ category: String)
 }
 
 final class Coordinator: ObservableObject {
