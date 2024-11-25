@@ -24,6 +24,7 @@ public class Favorite: NSManagedObject, Identifiable {
     @NSManaged public var thumbnail: String?
     @NSManaged public var category: String?
     @NSManaged public var id: String?
+    @NSManaged public var userId: String?
  
     func toCourse() -> Course {
         return .init(

@@ -28,6 +28,7 @@ final class FavoritesService {
         favorite.video = course.video
         favorite.desc = course.description
         favorite.createdAt = course.createdAt
+        favorite.userId = CurrentUserService.shared.getCurrentUser()?.id
         save()
     }
 
