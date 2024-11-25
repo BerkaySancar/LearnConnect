@@ -9,22 +9,16 @@ import SwiftUI
 
 struct SearchView: View {
     
-    @State private var text = ""
-    
-    var courses: [Course] = [
-//                  Course(title: "SwiftUI Essentials", imageName: "swift"),
-//                  Course(title: "Mastering Combine", imageName: "combine"),
-//                  Course(title: "iOS Animations", imageName: "animation"),
-//                  Course(title: "CoreData Deep Dive", imageName: "coredata")
-    ]
+    @EnvironmentObject private var coordinator: Coordinator
+    @StateObject private var viewModel = SearchViewModel()
     
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 TopSearchView()
                 
-                if courses.isEmpty {
-                    if text.isEmpty {
+                if viewModel.courses.isEmpty {
+                    if viewModel.searchText.isEmpty {
                         EmptyContentView(
                             systemImage: "magnifyingglass",
                             title: "Search",
@@ -34,7 +28,7 @@ struct SearchView: View {
                         EmptyContentView(
                             systemImage: "xmark.circle",
                             title: "No Results Found",
-                            description: "We couldn't find any courses matching \n \"\(text)\""
+                            description: "We couldn't find any courses matching \n \"\(viewModel.searchText)\""
                         )
                     }
                 } else {
@@ -66,8 +60,7 @@ extension SearchView {
                     .padding(.leading, 16)
                     .padding(.top, 52)
                     .padding(.bottom, 8)
-                CustomSearchBarView(text: $text, searchDisabled: false)
-                
+                CustomSearchBarView(text: $viewModel.searchText, searchDisabled: false)
             }
         }
         .frame(height: 50)
@@ -77,14 +70,19 @@ extension SearchView {
     private func ContentView(geometry: GeometryProxy) -> some View {
         ScrollView {
             LazyVStack {
-                ForEach(courses) { course in
-//                    CourseCardView(course: course, isFav: true)
-//                        .frame(width: geometry.size.width - 32, height: 230)
-//                        .padding(.top, 32)
+                ForEach(viewModel.courses) { course in
+                    CourseCardView(course: course) { isFav in
+                        viewModel.favTapped(course: course, isFavorite: isFav)
+                    }
+                    .onTapGesture {
+                        coordinator.push(.courseDetail(course))
+                    }
+                    .frame(width: geometry.size.width - 32, height: 230)
+                    .padding(.top, 16)
                 }
             }
         }
-        .padding(.top, 38)
+        .padding(.top, 54)
     }
 }
 
