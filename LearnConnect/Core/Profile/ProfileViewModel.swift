@@ -37,7 +37,7 @@ final class ProfileViewModel: ObservableObject {
     }
     
     func getEnrolledCourses() {
-        self.enrolledCourses = enrolledCoursesService.getEnrolledCourses().filter { $0.userId == currentUser?.id }
+        self.enrolledCourses = enrolledCoursesService.getEnrolledCourses()
     }
     
     func getCurrentUser() {

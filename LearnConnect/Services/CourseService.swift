@@ -52,11 +52,7 @@ final class CourseService {
             switch results {
             case .success(let data):
                 let tempCourses = data ?? []
-                let favorites = self.favoritesService.getFavorites().filter {
-                    $0.userId == CurrentUserService.shared.getCurrentUser()?.id
-                }.compactMap {
-                    $0.id
-                }
+                let favorites = self.favoritesService.getFavorites().compactMap { $0.id }
                 courses = tempCourses.map {
                     $0.toCopy(isFavorite: favorites.contains($0.id))
                 }
@@ -69,7 +65,7 @@ final class CourseService {
     }
     
     func getFavoriteCourses(completion: ([Course]) -> Void) {
-        let favorites = self.favoritesService.getFavorites().filter { $0.userId == CurrentUserService.shared.getCurrentUser()?.id }
+        let favorites = self.favoritesService.getFavorites()
         let courses = favorites.map {
             $0.toCourse()
         }

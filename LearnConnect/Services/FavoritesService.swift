@@ -35,7 +35,7 @@ final class FavoritesService {
     func getFavorites() -> [Favorite] {
         do {
             let request = NSFetchRequest<Favorite>(entityName: "Favorite")
-            return try context.fetch(request)
+            return try context.fetch(request).filter { $0.userId == CurrentUserService.shared.getCurrentUser()?.id }
         } catch {
             print("Failed to fetch favorites: \(error.localizedDescription)")
             return []

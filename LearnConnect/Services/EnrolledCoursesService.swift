@@ -36,7 +36,7 @@ final class EnrolledCoursesService {
     func getEnrolledCourses() -> [EnrolledCourses] {
         do {
             let request = NSFetchRequest<EnrolledCourses>(entityName: "EnrolledCourses")
-            return try context.fetch(request)
+            return try context.fetch(request).filter { $0.userId == currentUserService.getCurrentUser()?.id }
         } catch {
             print("Failed to fetch enrolled courses: \(error.localizedDescription)")
             return []

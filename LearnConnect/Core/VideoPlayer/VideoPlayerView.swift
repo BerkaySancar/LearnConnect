@@ -45,6 +45,8 @@ struct VideoPlayerView: View {
                         viewModel.setVideoCurrentTimeForCourse(currentTime: player.currentTime().seconds)
                     }
                     removeObserverForVideoCompletion()
+                    
+                    player?.pause()
                 }
         }
     }

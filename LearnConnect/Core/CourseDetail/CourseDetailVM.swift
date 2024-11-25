@@ -11,6 +11,7 @@ final class CourseDetailVM: ObservableObject {
     
     private let favoriteService: FavoritesService
     private let enrolledCoursesService: EnrolledCoursesService
+    private let currentUserService: CurrentUserService
     
     @Published var course: Course
     @Published var isJoined: Bool = false
@@ -18,12 +19,14 @@ final class CourseDetailVM: ObservableObject {
     
     init(course: Course,
          favoriteService: FavoritesService = .shared,
-         enrolledCoursesService: EnrolledCoursesService = .shared) {
+         enrolledCoursesService: EnrolledCoursesService = .shared,
+         currentUserService: CurrentUserService = .shared) {
         self.course = course
         self.favoriteService = favoriteService
         self.enrolledCoursesService = enrolledCoursesService
+        self.currentUserService = currentUserService
         
-        isJoined = enrolledCoursesService.getEnrolledCourses().contains(where: {$0.courseId == course.id})
+        isJoined = enrolledCoursesService.getEnrolledCourses().contains(where: { $0.courseId == course.id })
     }
     
     func addToFavoriteTapped() {
@@ -38,7 +41,7 @@ final class CourseDetailVM: ObservableObject {
     }
     
     func joinCourseTapped() {
-        if self.enrolledCoursesService.getEnrolledCourses().contains(where: {$0.courseId == course.id}) {
+        if self.enrolledCoursesService.getEnrolledCourses().contains(where: { $0.courseId == course.id }) {
             self.isJoined.toggle()
             enrolledCoursesService.removeFromEnrolledCourses(id: course.id)
         } else {
