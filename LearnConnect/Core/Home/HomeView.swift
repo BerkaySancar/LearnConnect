@@ -39,10 +39,10 @@ extension HomeView {
     @ViewBuilder
     private func TopView() -> some View {
         ZStack(alignment: .leading) {
-            RoundedRectangle(cornerRadius: 24)
-                .fill(LinearGradient(colors: [.appGreen, .linearGreen],
-                                     startPoint: .top,
-                                     endPoint: .bottom))
+            LinearGradient(colors: [.appGreen, .linearGreen],
+                           startPoint: .top,
+                           endPoint: .bottom)
+                .clipShape(RoundedCornersShape(radius: 24, corners: [.bottomLeft, .bottomRight]))
                 .ignoresSafeArea()
                 .frame(height: 170)
             

@@ -15,7 +15,7 @@ struct ProfileView: View {
     
     var body: some View {
         GeometryReader { geometry in
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
                 DefaultTopView(title: "Profile")
                 ScrollView {
                     UserInfoView()
@@ -66,7 +66,8 @@ extension ProfileView {
             
             Spacer()
         }
-        .padding()
+        .padding([.horizontal])
+        .padding(.vertical, 12)
     }
     
     @ViewBuilder
@@ -81,7 +82,7 @@ extension ProfileView {
                 .frame(width: 1, height: 80)
                 .foregroundStyle(darkMode ? .white : .black)
             
-            VStack {
+            VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     VStack(spacing: 12) {
                         Text("Enrolled Courses")
@@ -176,6 +177,6 @@ extension ProfileView {
                 }
             }
         }
-        .padding(.top, 16)
+        .padding(.top, 12)
     }
 }
