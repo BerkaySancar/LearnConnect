@@ -11,11 +11,27 @@
 		B19F9F752CF339D40011A4F2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B19F9F742CF339D40011A4F2 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B1418E2F2CF616AD00A76CE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B144C9682CEF7D1100D5C2C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B144C96F2CEF7D1100D5C2C2;
+			remoteInfo = LearnConnect;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		B1418E2B2CF616AD00A76CE8 /* LearnConnectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LearnConnectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B144C9702CEF7D1100D5C2C2 /* LearnConnect.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LearnConnect.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		B1418E2C2CF616AD00A76CE8 /* LearnConnectTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LearnConnectTests;
+			sourceTree = "<group>";
+		};
 		B144C9722CEF7D1100D5C2C2 /* LearnConnect */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = LearnConnect;
@@ -24,6 +40,13 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B1418E282CF616AD00A76CE8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B144C96D2CEF7D1100D5C2C2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -47,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				B144C9722CEF7D1100D5C2C2 /* LearnConnect */,
+				B1418E2C2CF616AD00A76CE8 /* LearnConnectTests */,
 				B1418E202CF60E9F00A76CE8 /* Frameworks */,
 				B144C9712CEF7D1100D5C2C2 /* Products */,
 			);
@@ -56,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				B144C9702CEF7D1100D5C2C2 /* LearnConnect.app */,
+				B1418E2B2CF616AD00A76CE8 /* LearnConnectTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -63,6 +88,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B1418E2A2CF616AD00A76CE8 /* LearnConnectTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B1418E312CF616AD00A76CE8 /* Build configuration list for PBXNativeTarget "LearnConnectTests" */;
+			buildPhases = (
+				B1418E272CF616AD00A76CE8 /* Sources */,
+				B1418E282CF616AD00A76CE8 /* Frameworks */,
+				B1418E292CF616AD00A76CE8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B1418E302CF616AD00A76CE8 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B1418E2C2CF616AD00A76CE8 /* LearnConnectTests */,
+			);
+			name = LearnConnectTests;
+			packageProductDependencies = (
+			);
+			productName = LearnConnectTests;
+			productReference = B1418E2B2CF616AD00A76CE8 /* LearnConnectTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		B144C96F2CEF7D1100D5C2C2 /* LearnConnect */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = B144C97E2CEF7D1200D5C2C2 /* Build configuration list for PBXNativeTarget "LearnConnect" */;
@@ -97,6 +145,10 @@
 				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
+					B1418E2A2CF616AD00A76CE8 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = B144C96F2CEF7D1100D5C2C2;
+					};
 					B144C96F2CEF7D1100D5C2C2 = {
 						CreatedOnToolsVersion = 16.1;
 					};
@@ -120,11 +172,19 @@
 			projectRoot = "";
 			targets = (
 				B144C96F2CEF7D1100D5C2C2 /* LearnConnect */,
+				B1418E2A2CF616AD00A76CE8 /* LearnConnectTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B1418E292CF616AD00A76CE8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B144C96E2CEF7D1100D5C2C2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -135,6 +195,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B1418E272CF616AD00A76CE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B144C96C2CEF7D1100D5C2C2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -144,7 +211,51 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B1418E302CF616AD00A76CE8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B144C96F2CEF7D1100D5C2C2 /* LearnConnect */;
+			targetProxy = B1418E2F2CF616AD00A76CE8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B1418E322CF616AD00A76CE8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QQ4V82589Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.berkaysancar.LearnConnectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LearnConnect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LearnConnect";
+			};
+			name = Debug;
+		};
+		B1418E332CF616AD00A76CE8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = QQ4V82589Y;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.berkaysancar.LearnConnectTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LearnConnect.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LearnConnect";
+			};
+			name = Release;
+		};
 		B144C97C2CEF7D1200D5C2C2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -327,6 +438,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B1418E312CF616AD00A76CE8 /* Build configuration list for PBXNativeTarget "LearnConnectTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1418E322CF616AD00A76CE8 /* Debug */,
+				B1418E332CF616AD00A76CE8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		B144C96B2CEF7D1100D5C2C2 /* Build configuration list for PBXProject "LearnConnect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
