@@ -10,7 +10,6 @@ import SwiftUI
 struct SettingsView: View {
     
     @AppStorage("isDarkMode") private var darkMode: Bool = false
-    @AppStorage("loggedInUserID") private var loggedInUserID = ""
     @EnvironmentObject private var coordinator: Coordinator
     
     @State private var isPresentedSignOutConfirm: Bool = false
@@ -70,8 +69,7 @@ struct SettingsView: View {
                     }
                     .confirmationDialog("Are you sure?", isPresented: $isPresentedDeleteAccountConfirm) {
                         Button("DELETE ACCOUNT", role: .destructive) {
-                            viewModel.deleteAccountBy(id: self.loggedInUserID)
-                            self.loggedInUserID = ""
+                            viewModel.deleteAccountBy()
                             self.coordinator.push(.login)
                         }
                     }

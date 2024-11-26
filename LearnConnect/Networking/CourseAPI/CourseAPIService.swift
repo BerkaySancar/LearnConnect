@@ -14,12 +14,8 @@ protocol CourseAPIServiceProtocol {
 
 final class CourseAPIService: CourseAPIServiceProtocol {
     
-    static let shared = CourseAPIService()
-    
-    private init () {}
-        
     func fetchCourses(completion: @escaping (Result<[Course]?, NetworkError>) -> Void) {
-        NetworkManager.shared.request(MockCourseAPI.getCourses, type: [Course].self) { results in
+        NetworkManager.shared.request(CourseAPI.getCourses, type: [Course].self) { results in
             switch results {
             case .success(let data):
                 completion(.success(data))
@@ -30,7 +26,7 @@ final class CourseAPIService: CourseAPIServiceProtocol {
     }
     
     func fetchSearchedCourses(query: String, completion: @escaping (Result<[Course]?, NetworkError>) -> Void) {
-        NetworkManager.shared.request(MockCourseAPI.searchCourse(query), type: [Course].self) { results in
+        NetworkManager.shared.request(CourseAPI.searchCourse(query), type: [Course].self) { results in
             switch results {
             case .success(let data):
                 completion(.success(data))

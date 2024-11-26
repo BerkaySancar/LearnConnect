@@ -12,7 +12,7 @@ final class SettingsViewModel: ObservableObject {
     private let authService: AuthServiceProtocol
     private let currentUserService: CurrentUserService
     
-    init(authService: AuthService = .shared,
+    init(authService: AuthService = AuthService(),
          currentUserService: CurrentUserService = .shared) {
         self.authService = authService
         self.currentUserService = currentUserService
@@ -29,7 +29,7 @@ final class SettingsViewModel: ObservableObject {
         }
     }
     
-    func deleteAccountBy(id: String) {
+    func deleteAccountBy() {
         authService.deleteAccount()
         currentUserService.deleteCurrentUser()
     }

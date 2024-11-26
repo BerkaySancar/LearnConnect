@@ -9,13 +9,13 @@ import Foundation
 
 final class CategoryCoursesVM: ObservableObject {
     
-    private let favoritesService: FavoritesService
+    private let favoritesService: FavoritesServiceProtocol
     
     @Published var courses: [Course]
     @Published var category: String
     @Published var categoryCourses: [Course] = []
     
-    init(courses: [Course], category: String, favoritesService: FavoritesService = .shared) {
+    init(courses: [Course], category: String, favoritesService: FavoritesServiceProtocol = FavoritesService()) {
         self.courses = courses
         self.category = category
         self.favoritesService = favoritesService

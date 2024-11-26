@@ -9,6 +9,8 @@ import Foundation
 
 final class SignUpViewModel: ObservableObject {
     
+    private let authService: AuthServiceProtocol
+    
     @Published var password: String = ""
     @Published var email: String = ""
     @Published var userName: String = ""
@@ -17,13 +19,17 @@ final class SignUpViewModel: ObservableObject {
     @Published var activeAlert: SignUpAlert = .signUpFailure
     @Published var showActivity: Bool = false
     
-    func signUpTapped() {
+    init(authService: AuthServiceProtocol = AuthService()) {
+        self.authService = authService
+    }
+    
+    func signUpTapped(email: String, password: String) {
         if userName == "" || email == "" || password == "" || password.count < 5 || !email.isValidEmail() {
             activeAlert = .signUpFailure
             showAlert.toggle()
         } else {
             self.showActivity.toggle()
-            AuthService.shared.signUp(name: userName, email: email, password: password) { [weak self] results in
+            authService.signUp(name: userName, email: email, password: password) { [weak self] results in
                 guard let self else { return }
                 self.showActivity.toggle()
                 switch results {

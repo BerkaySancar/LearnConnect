@@ -14,7 +14,7 @@ enum CourseDetailAlertType {
 
 final class CourseDetailVM: ObservableObject {
     
-    private let favoriteService: FavoritesService
+    private let favoriteService: FavoritesServiceProtocol
     private let enrolledCoursesService: EnrolledCoursesService
     private let currentUserService: CurrentUserService
     
@@ -24,7 +24,7 @@ final class CourseDetailVM: ObservableObject {
     @Published var showAlert = false
     
     init(course: Course,
-         favoriteService: FavoritesService = .shared,
+         favoriteService: FavoritesServiceProtocol = FavoritesService() ,
          enrolledCoursesService: EnrolledCoursesService = .shared,
          currentUserService: CurrentUserService = .shared) {
         self.course = course.toCopy(isFavorite: favoriteService.isCourseFavorite(courseId: course.id))

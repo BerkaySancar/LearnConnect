@@ -77,7 +77,7 @@ extension LoginView {
                 imageName: nil,
                 buttonText: "Login",
                 action: {
-                    viewModel.loginTapped { coordinator.push(.mainTabBar) }
+                    viewModel.loginTapped(email: viewModel.email, password: viewModel.password) { coordinator.push(.mainTabBar) }
                 },
                 imageTint: nil
             )

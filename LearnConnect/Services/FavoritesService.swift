@@ -8,13 +8,21 @@
 import Foundation
 import CoreData.NSManagedObjectContext
 
-final class FavoritesService {
-    
-    static let shared = FavoritesService()
+protocol FavoritesServiceProtocol {
+    func addToFavorites(course: Course)
+    func getFavorites() -> [Favorite]
+    func isCourseFavorite(courseId: String) -> Bool
+    func removeFromFavorites(id: String)
+    func get(id: String) -> Favorite?
+    func save()
+    func delete()
+}
+
+final class FavoritesService: FavoritesServiceProtocol {
     
     private let context: NSManagedObjectContext
     
-    private init(context: NSManagedObjectContext = DatabaseManager.shared.context) {
+    init(context: NSManagedObjectContext = DatabaseManager.shared.context) {
         self.context = context
     }
     
@@ -53,7 +61,7 @@ final class FavoritesService {
         }
     }
     
-    private func get(id: String) -> Favorite? {
+    internal func get(id: String) -> Favorite? {
         let fetchRequest = NSFetchRequest<Favorite>(entityName: "Favorite")
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
@@ -66,7 +74,7 @@ final class FavoritesService {
         }
     }
     
-    private func save() {
+    internal func save() {
         if context.hasChanges {
             do {
                 try context.save()

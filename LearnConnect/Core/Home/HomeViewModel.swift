@@ -15,8 +15,8 @@ protocol HomeViewModelProtocol {
 
 final class HomeViewModel: ObservableObject, HomeViewModelProtocol {
     
-    private let courseService: CourseService
-    private let favoriteService: FavoritesService
+    private let courseService: CourseServiceProtocol
+    private let favoriteService: FavoritesServiceProtocol
     private let currentUserService: CurrentUserService
     
     @Published var courses: [Course] = []
@@ -25,8 +25,8 @@ final class HomeViewModel: ObservableObject, HomeViewModelProtocol {
     @Published var currentUser: User?
     @Published var searchText = ""
     
-    init(courseService: CourseService = .shared,
-         favoriteService: FavoritesService = .shared,
+    init(courseService: CourseServiceProtocol = CourseService(),
+         favoriteService: FavoritesServiceProtocol = FavoritesService(),
          currentUserService: CurrentUserService = .shared) {
         self.courseService = courseService
         self.favoriteService = favoriteService

@@ -7,15 +7,20 @@
 
 import Foundation
 
-final class CourseService {
-    
-    static let shared = CourseService()
+protocol CourseServiceProtocol {
+    func getCourses(completion: @escaping ([Course]) -> Void)
+    func getSearchedCourses(query: String, completion: @escaping ([Course]) -> Void)
+    func getFavoriteCourses(completion: ([Course]) -> Void)
+    func getCoursesFromCache() -> [Course]
+}
+
+final class CourseService: CourseServiceProtocol {
     
     private let courseAPI: CourseAPIServiceProtocol
-    private let favoritesService: FavoritesService
+    private let favoritesService: FavoritesServiceProtocol
     
-    private init(courseAPI: CourseAPIServiceProtocol = CourseAPIService.shared,
-         favoritesService: FavoritesService = FavoritesService.shared) {
+    init(courseAPI: CourseAPIServiceProtocol = CourseAPIService(),
+         favoritesService: FavoritesServiceProtocol = FavoritesService()) {
         self.courseAPI = courseAPI
         self.favoritesService = favoritesService
     }

@@ -9,6 +9,8 @@ import Foundation
 
 final class LoginViewModel: ObservableObject {
     
+    private let authService: AuthServiceProtocol
+    
     @Published var email: String = ""
     @Published var password: String = ""
     
@@ -16,9 +18,13 @@ final class LoginViewModel: ObservableObject {
     @Published var showAlert = false
     @Published var showActivity = false
     
-    func loginTapped(completion: @escaping () -> Void) {
+    init(authService: AuthServiceProtocol = AuthService()) {
+        self.authService = authService
+    }
+    
+    func loginTapped(email: String, password: String, completion: @escaping () -> Void) {
         showActivity = true
-        AuthService.shared.login(email: email, password: password) { [weak self] results in
+        authService.login(email: email, password: password) { [weak self] results in
             guard let self else { return }
             self.showActivity = false
             switch results {

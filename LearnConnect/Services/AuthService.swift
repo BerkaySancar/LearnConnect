@@ -18,13 +18,9 @@ protocol AuthServiceProtocol {
 }
 
 final class AuthService: AuthServiceProtocol {
-    
-    static let shared = AuthService()
-    
+        
     private let auth = Auth.auth()
-    
-    private init() { }
-    
+        
     func login(email: String, password: String, completion: @escaping (Result<(CurrentUser)?, AuthError>) -> Void) {
         auth.signIn(withEmail: email, password: password) { (result, error)  in
             if let result,

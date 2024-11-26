@@ -9,8 +9,16 @@ import Foundation
 
 final class FavoritesViewModel: ObservableObject {
     
-    private let favoriteService: FavoritesService = .shared
-    private let courseService: CourseService = .shared
+    private let favoriteService: FavoritesServiceProtocol
+    private let courseService: CourseServiceProtocol
+    
+    init(
+        favoriteService: FavoritesServiceProtocol = FavoritesService(),
+        courseService: CourseServiceProtocol = CourseService()
+    ) {
+        self.favoriteService = favoriteService
+        self.courseService = courseService
+    }
     
     @Published var courses: [Course] = []
     

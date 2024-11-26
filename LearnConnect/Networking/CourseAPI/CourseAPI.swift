@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MockCourseAPI: URLRequestConvertible {
+enum CourseAPI: URLRequestConvertible {
     
     case getCourses
     case searchCourse(String)

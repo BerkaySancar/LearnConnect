@@ -10,15 +10,15 @@ import Combine
 
 final class SearchViewModel: ObservableObject {
     
-    private let courseService: CourseService
-    private let favoriteService: FavoritesService
+    private let courseService: CourseServiceProtocol
+    private let favoriteService: FavoritesServiceProtocol
     
     @Published var courses: [Course] = []
     @Published var searchText: String = ""
     private var cancellables = Set<AnyCancellable>()
     
-    init(courseService: CourseService = .shared,
-         favoriteService: FavoritesService = .shared) {
+    init(courseService: CourseServiceProtocol = CourseService(),
+         favoriteService: FavoritesServiceProtocol = FavoritesService()) {
         self.courseService = courseService
         self.favoriteService = favoriteService
         

@@ -76,7 +76,9 @@ extension SignUpView {
             CustomButton(
                 imageName: nil,
                 buttonText: "Sign Up",
-                action: viewModel.signUpTapped,
+                action: {
+                    viewModel.signUpTapped(email: viewModel.email, password: viewModel.password)
+                },
                 imageTint: nil
             )
             .padding(.top)
