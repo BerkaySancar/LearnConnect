@@ -11,6 +11,7 @@ struct ProfileView: View {
     
     @AppStorage("isDarkMode") private var darkMode = false
     
+    @EnvironmentObject private var coordinator: Coordinator
     @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
@@ -141,6 +142,9 @@ extension ProfileView {
             LazyVStack {
                 ForEach(viewModel.enrolledCourses, id: \.self) { enrolledCourse in
                     MyCourseCardView(enrolledCourse: enrolledCourse, viewModel: viewModel)
+                        .onTapGesture {
+                            coordinator.push(.courseDetail(enrolledCourse.toCourse()))
+                        }
                 }
             }
         }

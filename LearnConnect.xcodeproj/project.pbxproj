@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1418E222CF60E9F00A76CE8 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = B1418E212CF60E9F00A76CE8 /* FirebaseCrashlytics */; };
 		B19F9F752CF339D40011A4F2 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B19F9F742CF339D40011A4F2 /* FirebaseAuth */; };
 /* End PBXBuildFile section */
 
@@ -28,16 +29,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				B19F9F752CF339D40011A4F2 /* FirebaseAuth in Frameworks */,
+				B1418E222CF60E9F00A76CE8 /* FirebaseCrashlytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B1418E202CF60E9F00A76CE8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B144C9672CEF7D1100D5C2C2 = {
 			isa = PBXGroup;
 			children = (
 				B144C9722CEF7D1100D5C2C2 /* LearnConnect */,
+				B1418E202CF60E9F00A76CE8 /* Frameworks */,
 				B144C9712CEF7D1100D5C2C2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -71,6 +81,7 @@
 			name = LearnConnect;
 			packageProductDependencies = (
 				B19F9F742CF339D40011A4F2 /* FirebaseAuth */,
+				B1418E212CF60E9F00A76CE8 /* FirebaseCrashlytics */,
 			);
 			productName = LearnConnect;
 			productReference = B144C9702CEF7D1100D5C2C2 /* LearnConnect.app */;
@@ -348,6 +359,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		B1418E212CF60E9F00A76CE8 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B19F9F732CF339D40011A4F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
 		B19F9F742CF339D40011A4F2 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B19F9F732CF339D40011A4F2 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

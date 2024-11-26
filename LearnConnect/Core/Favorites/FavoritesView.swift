@@ -56,6 +56,7 @@ struct FavoritesView: View {
             .onAppear {
                 viewModel.getCourses()
             }
+            .padding(.bottom, 62)
             .background(.appBackground)
         }
     }
@@ -77,10 +78,10 @@ extension FavoritesView {
                     .frame(width: geometry.size.width - 32, height: 230)
                 }
             }
+            .padding(.top, 16)
+            Spacer()
         }
-        .padding(.top, 22)
     }
-    
 }
 
 #Preview {

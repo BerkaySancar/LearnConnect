@@ -66,9 +66,9 @@ final class HomeViewModel: ObservableObject, HomeViewModelProtocol {
     func getCategories() {
         self.categories = [
             .init(name: "Design", image: "category_design"),
-            .init(name: "Health", image: "category_health"),
-            .init(name: "Sports", image: "category_sports"),
             .init(name: "Software", image: "category_software"),
+            .init(name: "Sports", image: "category_sports"),
+            .init(name: "Health", image: "category_health"),
             .init(name: "Education", image: "category_education")
         ]
     }

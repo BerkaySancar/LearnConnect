@@ -36,17 +36,27 @@ struct CourseDetailView: View {
                     BottomButtonsView()
                     
                     Spacer()
-                    
                 }
-                
                 Spacer()
             }
             .background(.appBackground)
-            .alert(isPresented: $viewModel.showJoinedAlert) {
-                Alert(
-                    title: Text("Enrolled Successfully"),
-                    message: Text("You have successfully enrolled in the course. You can now start watching and learning!")
-                )
+            .alert(isPresented: $viewModel.showAlert) {
+                switch viewModel.currentAlert {
+                case .successAlert:
+                    Alert(
+                        title: Text("Enrolled Successfully"),
+                        message: Text("You have successfully enrolled in the course. You can now start watching and learning!")
+                    )
+                case .warningAlert:
+                    Alert(
+                        title: Text("Warning"),
+                        message: Text("Are you sure about leaving the course?"),
+                        primaryButton: .destructive(Text("Leave")) {
+                            viewModel.joinCourseTapped()
+                        },
+                        secondaryButton: .cancel()
+                    )
+                }
             }
         }
     }
@@ -112,8 +122,13 @@ extension CourseDetailView {
             CustomButton(
                 imageName: viewModel.isJoined ? "person.crop.circle.badge.minus" : "person.crop.circle.badge.plus",
                 buttonText: viewModel.isJoined ? "Leave the Course" : "Join the Course",
+                buttonType: viewModel.isJoined ? .destructive : .primary,
                 action: {
-                    viewModel.joinCourseTapped()
+                    if viewModel.isJoined {
+                        viewModel.showLeaveWarningAlert()
+                    } else {
+                        viewModel.joinCourseTapped()
+                    }
                 },
                 imageTint: .white
             )
@@ -124,7 +139,7 @@ extension CourseDetailView {
                 action: {
                     viewModel.addToFavoriteTapped()
                 },
-                imageTint: .white
+                imageTint: viewModel.course.isFavorite ? .red : .white
             )
         }
         .padding(.horizontal, 16)

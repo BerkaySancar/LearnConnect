@@ -41,6 +41,10 @@ final class FavoritesService {
             return []
         }
     }
+    
+    func isCourseFavorite(courseId: String) -> Bool {
+        return (get(id: courseId) != nil)
+    }
 
     func removeFromFavorites(id: String) {
         if let favoriteCourse = getFavorites().first(where: { $0.id == id }) {
@@ -48,7 +52,20 @@ final class FavoritesService {
             save()
         }
     }
-
+    
+    private func get(id: String) -> Favorite? {
+        let fetchRequest = NSFetchRequest<Favorite>(entityName: "Favorite")
+        fetchRequest.predicate = NSPredicate(format: "id == %@", id)
+        
+        do {
+            let results = try context.fetch(fetchRequest)
+            return results.first
+        } catch {
+            print("Fetch error: \(error.localizedDescription)")
+            return nil
+        }
+    }
+    
     private func save() {
         if context.hasChanges {
             do {

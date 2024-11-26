@@ -22,11 +22,14 @@ final class EnrolledCoursesService {
     
     func addCourseToEnrolledCourses(course: Course) {
         let enrolledCourse = EnrolledCourses(context: context)
-        enrolledCourse.id = UUID().uuidString
-        enrolledCourse.courseId = course.id
+        enrolledCourse.id = course.id
         enrolledCourse.userId = currentUserService.getCurrentUser()?.id
         enrolledCourse.thumbnail = course.thumbnail
-        enrolledCourse.courseName = course.name
+        enrolledCourse.name = course.name
+        enrolledCourse.category = course.category
+        enrolledCourse.createdAt = course.createdAt
+        enrolledCourse.desc = course.description
+        enrolledCourse.video = course.video
         enrolledCourse.videoDuration = 0.0
         enrolledCourse.videoCurrentTime = 0.0
         enrolledCourse.isCompleted = false
@@ -44,28 +47,28 @@ final class EnrolledCoursesService {
     }
     
     func updateCourseVideoDuration(courseId: String, videoDuration: Double) {
-        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.id == courseId }) {
             enrolledCourse.videoDuration = videoDuration
             save()
         }
     }
     
     func updateCourseVideoCurrentTime(courseId: String, currentTime: Double) {
-        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.id == courseId }) {
             enrolledCourse.videoCurrentTime = currentTime
             save()
         }
     }
     
     func updateCourseCompletion(courseId: String, isCompleted: Bool) {
-        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == courseId }) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.id == courseId }) {
             enrolledCourse.isCompleted = isCompleted
             save()
         }
     }
     
     func removeFromEnrolledCourses(id: String) {
-        if let enrolledCourse = getEnrolledCourses().first(where: { $0.courseId == id }) {
+        if let enrolledCourse = getEnrolledCourses().first(where: { $0.id == id }) {
             context.delete(enrolledCourse)
             save()
         }

@@ -27,7 +27,7 @@ final class VideoPlayerViewModel: ObservableObject {
     }
     
     func getVideoCurrentTime() {
-        let enrolledCourse = enrolledCoursesService.getEnrolledCourses().first(where: { $0.courseId == course.id })
+        let enrolledCourse = enrolledCoursesService.getEnrolledCourses().first(where: { $0.id == course.id })
         
         if let enrolledCourse {
             self.lastVideoTime = enrolledCourse.videoCurrentTime

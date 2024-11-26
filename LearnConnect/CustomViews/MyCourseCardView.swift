@@ -32,7 +32,7 @@ struct MyCourseCardView: View {
             }
             
             VStack(alignment: .leading, spacing: 0) {
-                Text(enrolledCourse.courseName ?? "")
+                Text(enrolledCourse.name ?? "")
                     .font(.headline)
                     .padding(.bottom, 16)
                 

@@ -11,6 +11,7 @@ import SwiftUI
 struct CustomButton: View {
     let imageName: String?
     let buttonText: String
+    var buttonType: CustomButtonType = .primary
     let action: () -> Void
     let imageTint: Color?
     
@@ -23,6 +24,7 @@ struct CustomButton: View {
                 }
                 Text(buttonText)
                     .fontWeight(.semibold)
+                    .foregroundStyle(buttonType.textColor)
             }
             .frame(maxWidth: .infinity)
         }
@@ -30,7 +32,7 @@ struct CustomButton: View {
         .padding(.vertical, 16)
         .padding(.horizontal, 8)
         .background(RoundedRectangle(cornerRadius: 16)
-            .foregroundStyle(.appGreen))
+            .foregroundStyle(buttonType.backGroundcolor))
     }
 }
 
@@ -43,4 +45,25 @@ struct CustomButton: View {
         },
         imageTint: .appBackground
     )
+}
+
+enum CustomButtonType {
+    case primary
+    case destructive
+    
+    var backGroundcolor: Color {
+        switch self {
+        case .primary: return .appGreen
+        case .destructive: return .red
+        }
+    }
+    
+    var textColor: Color {
+        switch self {
+        case .primary:
+            .white
+        case .destructive:
+            .white
+        }
+    }
 }

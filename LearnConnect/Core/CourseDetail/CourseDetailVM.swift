@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum CourseDetailAlertType {
+    case successAlert
+    case warningAlert
+}
+
 final class CourseDetailVM: ObservableObject {
     
     private let favoriteService: FavoritesService
@@ -15,18 +20,19 @@ final class CourseDetailVM: ObservableObject {
     
     @Published var course: Course
     @Published var isJoined: Bool = false
-    @Published var showJoinedAlert: Bool = false
+    @Published var currentAlert: CourseDetailAlertType = .successAlert
+    @Published var showAlert = false
     
     init(course: Course,
          favoriteService: FavoritesService = .shared,
          enrolledCoursesService: EnrolledCoursesService = .shared,
          currentUserService: CurrentUserService = .shared) {
-        self.course = course
+        self.course = course.toCopy(isFavorite: favoriteService.isCourseFavorite(courseId: course.id))
         self.favoriteService = favoriteService
         self.enrolledCoursesService = enrolledCoursesService
         self.currentUserService = currentUserService
         
-        isJoined = enrolledCoursesService.getEnrolledCourses().contains(where: { $0.courseId == course.id })
+        isJoined = enrolledCoursesService.getEnrolledCourses().contains(where: { $0.id == course.id })
     }
     
     func addToFavoriteTapped() {
@@ -41,13 +47,23 @@ final class CourseDetailVM: ObservableObject {
     }
     
     func joinCourseTapped() {
-        if self.enrolledCoursesService.getEnrolledCourses().contains(where: { $0.courseId == course.id }) {
+        if self.enrolledCoursesService.getEnrolledCourses().contains(where: { $0.id == course.id }) {
             self.isJoined.toggle()
             enrolledCoursesService.removeFromEnrolledCourses(id: course.id)
         } else {
             self.isJoined.toggle()
             enrolledCoursesService.addCourseToEnrolledCourses(course: course)
-            showJoinedAlert.toggle()
+            showJoinAlert()
         }
+    }
+    
+    func showLeaveWarningAlert() {
+        currentAlert = .warningAlert
+        showAlert.toggle()
+    }
+    
+    private func showJoinAlert() {
+        currentAlert = .successAlert
+        showAlert.toggle()
     }
 }
