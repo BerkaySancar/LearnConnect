@@ -31,7 +31,7 @@ struct FavoritesView: View {
                             }
                             .confirmationDialog("Are you sure want to delete all favorites?", isPresented: $isPresentedDeleteAllConfirm, titleVisibility: .visible) {
                                 Button("Delete All", role: .destructive) {
-                                    
+                                    viewModel.deleteAllTapped() 
                                 }
                             }
                         }

@@ -86,6 +86,7 @@ final class FavoritesService: FavoritesServiceProtocol {
     
     func delete() {
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Favorite")
+        fetchRequest.predicate = NSPredicate(format: "userId == %@", CurrentUserService.shared.getCurrentUser()?.id ?? "")
         let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         
         do {

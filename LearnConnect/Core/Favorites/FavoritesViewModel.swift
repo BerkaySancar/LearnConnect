@@ -36,4 +36,9 @@ final class FavoritesViewModel: ObservableObject {
             courses.remove(at: index)
         }
     }
+    
+    func deleteAllTapped() {
+        favoriteService.delete()
+        getCourses()
+    }
 }
