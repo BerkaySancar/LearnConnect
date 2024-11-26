@@ -66,7 +66,7 @@ final class FavoritesService: FavoritesServiceProtocol {
         fetchRequest.predicate = NSPredicate(format: "id == %@", id)
         
         do {
-            let results = try context.fetch(fetchRequest)
+            let results = try context.fetch(fetchRequest).filter { $0.userId == CurrentUserService.shared.getCurrentUser()?.id }
             return results.first
         } catch {
             print("Fetch error: \(error.localizedDescription)")
