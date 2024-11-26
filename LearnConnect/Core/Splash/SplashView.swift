@@ -46,7 +46,7 @@ struct SplashView: View {
                     title: Text("No Internet Connection"),
                     message: Text("Please connect to the internet to see updated content."),
                     dismissButton: .cancel(Text("OK"), action: {
-                        viewModel.splashAction()
+                        viewModel.setRoute()
                     })
                 )
             }

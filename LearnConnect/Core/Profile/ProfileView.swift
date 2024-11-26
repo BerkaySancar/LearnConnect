@@ -57,7 +57,7 @@ extension ProfileView {
             }
             
             VStack(alignment: .leading) {
-                Text(viewModel.currentUser?.name ?? "")
+                Text(viewModel.currentUser?.name?.capitalized ?? "")
                     .font(.title2.bold())
                 Text(verbatim: viewModel.currentUser?.email ?? "")
                     .font(.callout)

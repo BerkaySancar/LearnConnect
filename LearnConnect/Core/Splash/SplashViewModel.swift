@@ -19,11 +19,17 @@ final class SplashViewModel: ObservableObject {
             guard let self else { return }
             if Reachability.isNetworkReachable() == false {
                 presentNetworkAlert.toggle()
-            } else if CurrentUserService.shared.getCurrentUser() != nil {
-                self.splashRoute = .mainTabBar
             } else {
-                self.splashRoute = .onboarding
+                setRoute()
             }
+        }
+    }
+    
+    func setRoute() {
+        if CurrentUserService.shared.getCurrentUser() != nil {
+            self.splashRoute = .mainTabBar
+        } else {
+            self.splashRoute = .onboarding
         }
     }
 }

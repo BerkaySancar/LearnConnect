@@ -27,6 +27,7 @@ final class CourseService {
             guard let self else { return }
             switch results {
             case .success(let data):
+                CacheService.shared.addItem(key: .coursesFromAPI, item: data)
                 let tempCourses = data ?? []
                 let favorites = self.favoritesService.getFavorites().filter {
                     $0.userId == CurrentUserService.shared.getCurrentUser()?.id
@@ -70,5 +71,19 @@ final class CourseService {
             $0.toCourse()
         }
         completion(courses)
+    }
+    
+    func getCoursesFromCache() -> [Course] {
+        var courses: [Course] = []
+        let coursesFromCache = CacheService.shared.getItem(key: .coursesFromAPI, type: [Course].self) ?? []
+        let favorites = self.favoritesService.getFavorites().filter {
+            $0.userId == CurrentUserService.shared.getCurrentUser()?.id
+        }.compactMap {
+            $0.id
+        }
+        courses = coursesFromCache.map {
+            $0.toCopy(isFavorite: favorites.contains($0.id))
+        }
+        return courses
     }
 }

@@ -41,6 +41,9 @@ final class HomeViewModel: ObservableObject, HomeViewModelProtocol {
             guard let self else { return }
             DispatchQueue.main.async {
                 self.courses = courses
+                if courses.isEmpty {
+                    self.courses = self.courseService.getCoursesFromCache()
+                }
             }
         }
     }
