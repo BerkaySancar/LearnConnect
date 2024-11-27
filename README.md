@@ -6,6 +6,7 @@ LearnConnect is a modern, video-based educational platform that allows users to 
 - **iOS Version:** iOS 17.0+
 - **Architecture:** MVVM with Coordinator pattern
 - **Database:** Core Data for local data management
+- **Firebase:** Authorization & Push Notification
 - **Testing:** Unit tests for critical functionalities
 - **Video Management:** AVKit for video playback and progress tracking
 
