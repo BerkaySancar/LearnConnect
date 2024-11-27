@@ -5,15 +5,18 @@ LearnConnect is a modern, video-based educational platform that allows users to 
 - **Language & Framework:** Swift and SwiftUI
 - **iOS Version:** iOS 17.0+
 - **Architecture:** MVVM with Coordinator pattern
-- **Database:** Core Data for local data management
-- **Firebase:** Authorization & Push Notification
+- **Database:** Core Data for local data management, UserDefaults for API data caching
+- **Firebase:** Authorization & Push Notification & Crashlytics
 - **Testing:** Unit tests for critical functionalities
 - **Video Management:** AVKit for video playback and progress tracking
+- **Custom Components:** For reusable views
+- **Useful and Highly Experienced UI/UX**
 
 ## Implemented Features
 - **User Management:**
   - User registration and login with email and password.
   - View and manage user profiles.
+  - Current logged in user management.
 - **Course Management:**
   - List available courses dynamically.
   - Enroll in courses and track progress locally.
