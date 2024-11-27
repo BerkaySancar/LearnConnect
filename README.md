@@ -11,6 +11,37 @@ LearnConnect is a modern, video-based educational platform that allows users to 
 - **Video Management:** AVKit for video playback and progress tracking
 - **Custom Components:** For reusable views
 - **Useful and Highly Experienced UI/UX**
+- **Mock API:** MockAPI.io for simulating course data during development
+
+## Mock API Details
+LearnConnect utilizes a custom API that I personally created using [MockAPI.io](https://mockapi.io) to simulate course data during development.
+
+Below is an example of the JSON structure used:
+
+```json
+[
+    {
+        "createdAt": "2024-11-24T01:02:14.794Z",
+        "name": "Mastering Minimalist Design: The Art of Less",
+        "description": "Discover the principles of minimalist design and learn how to create impactful visuals with simplicity. Perfect for aspiring designers and enthusiasts.",
+        "instructor": "Charlotte Nienow",
+        "video": "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_20mb.mp4",
+        "thumbnail": "https://www.ziflow.com/hubfs/Video%20proofing%20The%20process%2C%20features%2C%20and%20tools%20for%20creative%20teams.jpg",
+        "category": "Design",
+        "id": "1"
+    },
+    {
+        "createdAt": "2024-11-24T10:59:40.555Z",
+        "name": "Introduction to Python: Coding for Beginners",
+        "description": "Learn the basics of Python programming with practical examples and exercises. A beginner-friendly guide to one of the most popular programming languages.",
+        "instructor": "Yvette Wiza",
+        "video": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+        "thumbnail": "https://dac.digital/wp-content/uploads/2023/07/1ud5eeycUbeH1kp1ln_gkJg-1200x680.jpe",
+        "category": "Software",
+        "id": "2"
+    }
+]
+```
 
 ## Implemented Features
 - **User Management:**
