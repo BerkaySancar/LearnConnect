@@ -3,6 +3,7 @@ LearnConnect is a modern, video-based educational platform that allows users to 
 
 ## Technologies Used
 - **Language & Framework:** Swift and SwiftUI
+- **iOS Version:** iOS 17.0+
 - **Architecture:** MVVM with Coordinator pattern
 - **Database:** Core Data for local data management
 - **Testing:** Unit tests for critical functionalities
@@ -36,6 +37,20 @@ The following bonus features were implemented:
   
 # App Preview
 
-https://github.com/user-attachments/assets/efe14552-b747-4da3-82e7-3df02d67a88b
+
+https://github.com/user-attachments/assets/ffe37ebc-1bff-48e1-bb9d-3a720af4dad8
+
+
+
+## Notifications
+![learnNotification](https://github.com/user-attachments/assets/08fe4d6e-3698-459f-96ca-2227c5e85225)
+
+## Login Management 
+
+
+https://github.com/user-attachments/assets/b67b5a4a-2293-4656-813c-9090d3a70544
+
+
+
 
 
